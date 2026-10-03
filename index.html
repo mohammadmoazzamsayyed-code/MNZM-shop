@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MNZM SHOP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Toast Notification Popup -->
+  <div id="toast" class="toast">Item added to cart!</div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">MNZM SHOP</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#products">Shop</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#" class="cart-btn" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <!-- Sliding Cart Sidebar -->
+  <div id="cartSidebar" class="cart-sidebar">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <span class="close-btn" onclick="toggleCart()">&times;</span>
+    </div>
+    <div class="cart-body">
+      <div id="cartItemsList">No items added yet.</div>
+    </div>
+    <div class="cart-footer">
+      <div class="total-price">
+        <strong>Total:</strong> ₹<span id="cartTotal">0</span>
+      </div>
+      <button class="checkout-btn" onclick="checkout()">Checkout</button>
+      <button class="clear-btn" onclick="clearCart()">Clear Cart</button>
+    </div>
+  </div>
+
+  <!-- Product Quick View Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt="Product Detail">
+        <div class="modal-info">
+          <h2 id="modalTitle"></h2>
+          <p id="modalPrice" class="price"></p>
+          <p id="modalDesc">Premium quality clothing made from 100% breathable cotton, perfect for everyday casual wear.</p>
+          <button id="modalAddToCartBtn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero / Banner Section -->
+  <section class="hero" id="home">
+    <h1>Upgrade Your Style</h1>
+    <p>Discover the latest trend in streetwear and casuals.</p>
+    
+    <!-- Search Bar -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()">
+    </div>
+  </section>
+
+  <main id="products">
+    <h2>Our Products</h2>
+    
+    <!-- Category Filter Buttons -->
+    <div class="category-buttons">
+      <button class="cat-btn active" onclick="filterCategory('all', event)">All</button>
+      <button class="cat-btn" onclick="filterCategory('tshirt', event)">T-Shirts</button>
+      <button class="cat-btn" onclick="filterCategory('jeans', event)">Jeans</button>
+    </div>
+
+    <div class="product-grid">
+
+      <!-- Black T-Shirt -->
+      <div class="card" data-category="tshirt">
+        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300" alt="Black T-Shirt" onclick="openModal('Black T-Shirt', 499, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500')">
+        <h3 onclick="openModal('Black T-Shirt', 499, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500')">Black T-Shirt</h3>
+        <p class="price">₹499</p>
+        <button onclick="addToCart('Black T-Shirt', 499)">Buy Now</button>
+      </div>
+
+      <!-- Pure White T-Shirt -->
+      <div class="card" data-category="tshirt">
+        <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=300" alt="White T-Shirt" onclick="openModal('White T-Shirt', 599, 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500')">
+        <h3 onclick="openModal('White T-Shirt', 599, 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500')">White T-Shirt</h3>
+        <p class="price">₹599</p>
+        <button onclick="addToCart('White T-Shirt', 599)">Buy Now</button>
+      </div>
+
+      <!-- Blue Jeans -->
+      <div class="card" data-category="jeans">
+        <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=300" alt="Blue Jeans" onclick="openModal('Blue Jeans', 999, 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500')">
+        <h3 onclick="openModal('Blue Jeans', 999, 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500')">Blue Jeans</h3>
+        <p class="price">₹999</p>
+        <button onclick="addToCart('Blue Jeans', 999)">Buy Now</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer / Contact Section -->
+  <footer id="contact">
+    <h3>Contact Us</h3>
+    <p>Email: zaffars593@gmail.com | Phone: +91 8097527096</p>
+    
+    <!-- Contact Form -->
+    <form class="contact-form" onsubmit="handleContactSubmit(event)">
+      <input type="text" id="contactName" placeholder="Your Name" required>
+      <input type="email" id="contactEmail" placeholder="Your Email" required>
+      <textarea id="contactMessage" placeholder="Your Message..." rows="4" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <p class="copyright">© 2026 MNZM SHOP. All rights reserved.</p>
+  </footer>
+
+  <!-- Interactivity Scripts -->
+  <script>
+    let cart = JSON.parse(localStorage.getItem('mnzmCart')) || [];
+
+    window.onload = function() {
+      updateCartUI();
+    };
+
+    function addToCart(itemName, price) {
+      let existingItem = cart.find(item => item.name === itemName);
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ name: itemName, price: price, quantity: 1 });
+      }
+
+      saveCart();
+      updateCartUI();
+      showToast(`${itemName} added to cart!`);
+    }
+
+    function changeQuantity(index, amount) {
+      cart[index].quantity += amount;
+      if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCart();
+      updateCartUI();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      saveCart();
+      updateCartUI();
+    }
+
+    function clearCart() {
+      cart = [];
+      saveCart();
+      updateCartUI();
+    }
+
+    function saveCart() {
+      localStorage.setItem('mnzmCart', JSON.stringify(cart));
+    }
+
+    function updateCartUI() {
+      let totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cartCount').innerText = totalCount;
+      
+      let itemsList = document.getElementById('cartItemsList');
+      let totalElement = document.getElementById('cartTotal');
+
+      if (cart.length === 0) {
+        itemsList.innerHTML = 'No items added yet.';
+        totalElement.innerText = '0';
+      } else {
+        itemsList.innerHTML = cart.map((item, index) => `
+          <div class="cart-item">
+            <div class="cart-item-details">
+              <strong>${item.name}</strong>
+              <span>₹${item.price * item.quantity}</span>
+            </div>
+            <div class="qty-controls">
+              <button onclick="changeQuantity(${index}, -1)">-</button>
+              <span>${item.quantity}</span>
+              <button onclick="changeQuantity(${index}, 1)">+</button>
+              <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+            </div>
+          </div>
+        `).join('');
+
+        let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        totalElement.innerText = total;
+      }
+    }
+
+    function showToast(message) {
+      let toast = document.getElementById('toast');
+      toast.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      alert(`Thank you for shopping with MNZM SHOP!\nYour total amount is ₹${total}. Your order has been placed successfully!`);
+      clearCart();
+      toggleCart();
+    }
+
+    function toggleCart() {
+      document.getElementById('cartSidebar').classList.toggle('open');
+    }
+
+    function filterProducts() {
+      let input = document.getElementById('searchInput').value.toLowerCase();
+      let cards = document.querySelectorAll('.card');
+
+      cards.forEach(card => {
+        let title = card.querySelector('h3').innerText.toLowerCase();
+        if (title.includes(input)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function filterCategory(category, e) {
+      let cards = document.querySelectorAll('.card');
+      let buttons = document.querySelectorAll('.cat-btn');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      e.target.classList.add('active');
+
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    /* Modal Controls */
+    function openModal(title, price, imgUrl) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalPrice').innerText = '₹' + price;
+      document.getElementById('modalImg').src = imgUrl;
+      
+      let btn = document.getElementById('modalAddToCartBtn');
+      btn.onclick = function() {
+        addToCart(title, price);
+        closeModal();
+      };
+      
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('productModal').style.display = 'none';
+    }
+
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      let name = document.getElementById('contactName').value;
+      alert(`Thank you ${name}! Your message has been sent successfully.`);
+      event.target.reset();
+    }
+
+    window.onclick = function(event) {
+      let modal = document.getElementById('productModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+  </script>
+
+</body>
+</html>
