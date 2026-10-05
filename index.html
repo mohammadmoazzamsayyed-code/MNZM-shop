@@ -3,12 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MNZM SHOP</title>
-  <link rel="stylesheet" href="style.css">
+  <title>MNZM SHOP - Premium Bottomwear</title>
+  <style>
+    :root {
+      --primary: #0f5132;
+      --primary-hover: #0c3e27;
+      --accent: #1e3a8a;
+      --accent-hover: #1e1b4b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --star-color: #f59e0b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 60px; }
+
+    /* Top Navbar */
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; color: var(--primary); }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; }
+    .cart-btn { background: var(--primary); color: white !important; padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(15, 81, 50, 0.2); transition: transform 0.2s, background 0.2s; }
+    .cart-btn:hover { transform: scale(1.05); background: var(--primary-hover); }
+
+    /* Hero Banner */
+    .hero { text-align: center; padding: 3rem 1rem; background: linear-gradient(135deg, #0f5132 0%, #062c1b 100%); color: white; }
+    .hero h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .hero p { color: #a7f3d0; margin-bottom: 1.5rem; }
+    .search-box input { width: 90%; max-width: 450px; padding: 0.8rem 1.2rem; border-radius: 25px; border: none; outline: none; font-size: 1rem; }
+
+    /* Category Filter Buttons */
+    .category-buttons { display: flex; justify-content: center; gap: 0.5rem; margin: 2rem 1rem 1rem; flex-wrap: wrap; }
+    .cat-btn { padding: 0.5rem 1.2rem; border: 1px solid var(--border); background: white; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+    .cat-btn.active, .cat-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* Product Grid */
+    main { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+    .section-title { text-align: center; margin-top: 1rem; font-size: 1.8rem; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; margin-top: 1.5rem; }
+
+    /* Product Card Design */
+    .card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column; }
+    .card img { width: 100%; height: 320px; object-fit: cover; }
+    .card-body { padding: 1.4rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .card h3 { font-size: 1.3rem; margin-bottom: 0.3rem; }
+    .price { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem; }
+
+    .option-group { margin-bottom: 1rem; }
+    .option-group label { font-size: 0.88rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem; font-weight: 700; }
+    .options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .opt-btn { padding: 0.4rem 0.8rem; border: 1px solid var(--border); background: #f8fafc; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; }
+    .opt-btn:hover { border-color: var(--primary); }
+    .opt-btn.selected { background: var(--primary); color: white; border-color: var(--primary); }
+
+    .buy-btn { width: 100%; padding: 0.85rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 0.5rem; margin-bottom: 1.2rem; transition: background 0.2s; }
+    .buy-btn:hover { background: var(--primary-hover); }
+
+    /* Reviews Section inside Card */
+    .card-reviews-wrapper { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: auto; background: #f1f5f9; padding: 1rem; border-radius: 8px; }
+    .reviews-title { font-size: 0.95rem; font-weight: bold; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; }
+    .review-item { background: white; padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 0.5rem; font-size: 0.85rem; }
+    .review-head { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 0.2rem; }
+    .review-stars { color: var(--star-color); }
+
+    .direct-review-form { margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .direct-review-form input, .direct-review-form select, .direct-review-form textarea { width: 100%; padding: 0.55rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; outline: none; }
+    .submit-rev-btn { background: var(--accent); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; }
+    .submit-rev-btn:hover { background: var(--accent-hover); }
+
+    /* Cart Drawer Sidebar */
+    .cart-sidebar { position: fixed; top: 0; right: -380px; width: 100%; max-width: 380px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); z-index: 300; transition: right 0.3s ease; display: flex; flex-direction: column; }
+    .cart-sidebar.open { right: 0; }
+    .cart-header { padding: 1.2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .close-btn { font-size: 1.5rem; cursor: pointer; }
+    .cart-body { padding: 1.2rem; flex-grow: 1; overflow-y: auto; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); }
+    .cart-item-details strong { display: block; font-size: 0.95rem; }
+    .cart-item-details span { font-size: 0.85rem; color: var(--text-muted); }
+    .qty-controls { display: flex; align-items: center; gap: 0.5rem; }
+    .qty-controls button { width: 24px; height: 24px; border: 1px solid var(--border); background: #f1f5f9; cursor: pointer; border-radius: 4px; font-weight: bold; }
+    .cart-footer { padding: 1.2rem; border-top: 1px solid var(--border); }
+    .total-price { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem; }
+    .checkout-btn, .clear-btn { width: 100%; padding: 0.8rem; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; margin-bottom: 0.5rem; }
+    .checkout-btn { background: #16a34a; color: white; }
+    .clear-btn { background: #ef4444; color: white; }
+
+    /* Modal & Toast */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 400; justify-content: center; align-items: center; padding: 1rem; }
+    .modal-content { background: white; border-radius: var(--radius); max-width: 500px; width: 100%; padding: 1.5rem; position: relative; }
+    .close-modal { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; cursor: pointer; }
+    .checkout-form h2 { margin-bottom: 1rem; font-size: 1.3rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; outline: none; }
+    .submit-order-btn { width: 100%; padding: 0.85rem; background: #25d366; color: white; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+    .toast { position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 0.8rem 1.5rem; border-radius: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: bottom 0.3s ease; z-index: 500; font-weight: 600; }
+    .toast.show { bottom: 20px; }
+
+    footer { text-align: center; padding: 2rem 1rem; background: #062c1b; color: white; margin-top: 3rem; }
+    footer p { color: #a7f3d0; font-size: 0.9rem; margin-top: 0.5rem; }
+  </style>
 </head>
 <body>
 
-  <!-- Toast Notification Popup -->
   <div id="toast" class="toast">Item added to cart!</div>
 
   <!-- Navigation Bar -->
@@ -18,130 +119,529 @@
       <li><a href="#home">Home</a></li>
       <li><a href="#products">Shop</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="#" class="cart-btn" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</a></li>
+      <li><a href="javascript:void(0)" class="cart-btn" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</a></li>
     </ul>
   </nav>
 
-  <!-- Sliding Cart Sidebar -->
+  <!-- Cart Drawer Sidebar -->
   <div id="cartSidebar" class="cart-sidebar">
     <div class="cart-header">
-      <h3>Your Cart</h3>
+      <h3>Your Shopping Cart</h3>
       <span class="close-btn" onclick="toggleCart()">&times;</span>
     </div>
-    <div class="cart-body">
-      <div id="cartItemsList">No items added yet.</div>
-    </div>
+    <div class="cart-body" id="cartItemsList">No items added yet.</div>
     <div class="cart-footer">
       <div class="total-price">
-        <strong>Total:</strong> ₹<span id="cartTotal">0</span>
+        <span>Total:</span>
+        <span>₹<span id="cartTotal">0</span></span>
       </div>
-      <button class="checkout-btn" onclick="checkout()">Checkout</button>
+      <button class="checkout-btn" onclick="openCheckoutModal()">Proceed to Checkout</button>
       <button class="clear-btn" onclick="clearCart()">Clear Cart</button>
     </div>
   </div>
 
-  <!-- Product Quick View Modal -->
-  <div id="productModal" class="modal">
+  <!-- WhatsApp Order Checkout Modal -->
+  <div id="checkoutModal" class="modal">
     <div class="modal-content">
-      <span class="close-modal" onclick="closeModal()">&times;</span>
-      <div class="modal-body">
-        <img id="modalImg" src="" alt="Product Detail">
-        <div class="modal-info">
-          <h2 id="modalTitle"></h2>
-          <p id="modalPrice" class="price"></p>
-          <p id="modalDesc">Premium quality clothing made from 100% breathable cotton, perfect for everyday casual wear.</p>
-          <button id="modalAddToCartBtn">Add to Cart</button>
+      <span class="close-modal" onclick="closeCheckoutModal()">&times;</span>
+      <form class="checkout-form" onsubmit="handleOrderSubmission(event)">
+        <h2>Customer Delivery Details</h2>
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="custName" required placeholder="Enter your full name">
         </div>
-      </div>
+        <div class="form-group">
+          <label>Phone / WhatsApp Number *</label>
+          <input type="tel" id="custPhone" required placeholder="Enter 10-digit mobile number">
+        </div>
+        <div class="form-group">
+          <label>Delivery Address *</label>
+          <textarea id="custAddress" rows="3" required placeholder="Flat No, Building, Street, Pincode"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="custPayment">
+            <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+            <option value="UPI / Online Payment">UPI / Online Payment</option>
+          </select>
+        </div>
+        <button type="submit" class="submit-order-btn">Place Order via WhatsApp 💬</button>
+      </form>
     </div>
   </div>
 
-  <!-- Hero / Banner Section -->
+  <!-- Hero Section -->
   <section class="hero" id="home">
     <h1>Upgrade Your Style</h1>
-    <p>Discover the latest trend in streetwear and casuals.</p>
-    
-    <!-- Search Bar -->
+    <p>Premium Quality Plazos, Leggings, Pants, and Unisex Bonkers.</p>
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()">
     </div>
   </section>
 
+  <!-- Main Store Section -->
   <main id="products">
-    <h2>Our Products</h2>
-    
-    <!-- Category Filter Buttons -->
+    <h2 class="section-title">Our Collection</h2>
+
     <div class="category-buttons">
       <button class="cat-btn active" onclick="filterCategory('all', event)">All</button>
-      <button class="cat-btn" onclick="filterCategory('tshirt', event)">T-Shirts</button>
-      <button class="cat-btn" onclick="filterCategory('jeans', event)">Jeans</button>
+      <button class="cat-btn" onclick="filterCategory('plazo', event)">Plazos</button>
+      <button class="cat-btn" onclick="filterCategory('leggings', event)">Leggings</button>
+      <button class="cat-btn" onclick="filterCategory('pants', event)">Pants</button>
+      <button class="cat-btn" onclick="filterCategory('joggers', event)">Bonkers</button>
     </div>
 
-    <div class="product-grid">
+    <div class="product-grid" id="productGrid">
 
-      <!-- Black T-Shirt -->
-      <div class="card" data-category="tshirt">
-        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300" alt="Black T-Shirt" onclick="openModal('Black T-Shirt', 499, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500')">
-        <h3 onclick="openModal('Black T-Shirt', 499, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500')">Black T-Shirt</h3>
-        <p class="price">₹499</p>
-        <button onclick="addToCart('Black T-Shirt', 499)">Buy Now</button>
+      <!-- Rinkle Plazo -->
+      <div class="card" data-category="plazo" data-id="rinkle-plazo">
+        <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800&auto=format&fit=crop" alt="Rinkle Plazo" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Rinkle+Plazo'">
+        <div class="card-body">
+          <h3>Rinkle Plazo</h3>
+          <p class="price">₹120</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-rinkle-plazo"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">Free Size</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Rinkle Plazo', 120)">Add to Cart 🛒</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span style="color: var(--star-color);">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-rinkle-plazo"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'rinkle-plazo')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
       </div>
 
-      <!-- Pure White T-Shirt -->
-      <div class="card" data-category="tshirt">
-        <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=300" alt="White T-Shirt" onclick="openModal('White T-Shirt', 599, 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500')">
-        <h3 onclick="openModal('White T-Shirt', 599, 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500')">White T-Shirt</h3>
-        <p class="price">₹599</p>
-        <button onclick="addToCart('White T-Shirt', 599)">Buy Now</button>
+      <!-- Printed Plazo -->
+      <div class="card" data-category="plazo" data-id="printed-plazo">
+        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Printed Plazo" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Printed+Plazo'">
+        <div class="card-body">
+          <h3>Printed Plazo</h3>
+          <p class="price">₹150</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">Multi-Color</button>
+            </div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">Free Size</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Printed Plazo', 150)">Add to Cart 🛒</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span style="color: var(--star-color);">★★★★☆</span>
+            </div>
+            <div class="reviews-list" id="reviews-printed-plazo"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'printed-plazo')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
       </div>
 
-      <!-- Blue Jeans -->
-      <div class="card" data-category="jeans">
-        <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=300" alt="Blue Jeans" onclick="openModal('Blue Jeans', 999, 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500')">
-        <h3 onclick="openModal('Blue Jeans', 999, 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500')">Blue Jeans</h3>
-        <p class="price">₹999</p>
-        <button onclick="addToCart('Blue Jeans', 999)">Buy Now</button>
+      <!-- Plain Plazo -->
+      <div class="card" data-category="plazo" data-id="plain-plazo">
+        <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800&auto=format&fit=crop" alt="Plain Plazo" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Plain+Plazo'">
+        <div class="card-body">
+          <h3>Plain Plazo</h3>
+          <p class="price">₹100</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-plain-plazo"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">Free Size</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Plain Plazo', 100)">Add to Cart 🛒</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span style="color: var(--star-color);">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-plain-plazo"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'plain-plazo')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cotton Leggings -->
+      <div class="card" data-category="leggings" data-id="cotton-leggings">
+        <img src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=800&auto=format&fit=crop" alt="Cotton Leggings" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Cotton+Leggings'">
+        <div class="card-body">
+          <h3>Cotton Leggings</h3>
+          <p class="price">₹150</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-cotton-leggings"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Cotton Leggings', 150)">Add to Cart 🛒</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span style="color: var(--star-color);">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-cotton-leggings"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'cotton-leggings')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nylon Leggings -->
+      <div class="card" data-category="leggings" data-id="nylon-leggings">
+        <img src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=800&auto=format&fit=crop" alt="Nylon Leggings" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Nylon+Leggings'">
+        <div class="card-body">
+          <h3>Nylon Leggings</h3>
+          <p class="price">₹180</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-nylon-leggings"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Nylon Leggings', 180)">Add to Cart 🛒</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span style="color: var(--star-color);">★★★★☆</span>
+            </div>
+            <div class="reviews-list" id="reviews-nylon-leggings"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'nylon-leggings')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ribbon Pant -->
+      <div class="card" data-category="pants" data-id="ribbon-pant">
+        <img src="https://images.unsplash.com/photo-1517445312882-bc9910d016b7?q=80&w=800&auto=format&fit=crop" alt="Ribbon Pant" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Ribbon+Pant'">
+        <div class="card-body">
+          <h3>Ribbon Pant</h3>
+          <p class="price">₹220</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-ribbon-pant"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Ribbon Pant', 220)">Add to Cart 🛒</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span style="color: var(--star-color);">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-ribbon-pant"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'ribbon-pant')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Korean Pant -->
+      <div class="card" data-category="pants" data-id="korean-pant">
+        <img src="https://images.unsplash.com/photo-1584370848010-d7fe6bc767ec?q=80&w=800&auto=format&fit=crop" alt="Korean Pant" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Korean+Pant'">
+        <div class="card-body">
+          <h3>Korean Pant</h3>
+          <p class="price">₹280</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-korean-pant"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Korean Pant', 280)">Add to Cart 🛒</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span style="color: var(--star-color);">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-korean-pant"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'korean-pant')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Baggie Pant (Girls) -->
+      <div class="card" data-category="pants" data-id="baggie-pant">
+        <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop" alt="Baggie Pant (Girls)" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Baggie+Pant'">
+        <div class="card-body">
+          <h3>Baggie Pant (Girls)</h3>
+          <p class="price">₹260</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-baggie-pant"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Baggie Pant (Girls)', 260)">Add to Cart 🛒</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span style="color: var(--star-color);">★★★★☆</span>
+            </div>
+            <div class="reviews-list" id="reviews-baggie-pant"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'baggie-pant')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bonker (Unisex) -->
+      <div class="card" data-category="joggers" data-id="bonker">
+        <img src="https://images.unsplash.com/photo-1552902865-b72c031ac5ea?q=80&w=800&auto=format&fit=crop" alt="Bonker (Men & Women)" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Bonker'">
+        <div class="card-body">
+          <h3>Bonker (Men & Women)</h3>
+          <p class="price">₹250</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-bonker"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Bonker (Men & Women)', 250)">Add to Cart 🛒</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span style="color: var(--star-color);">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-bonker"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'bonker')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
       </div>
 
     </div>
   </main>
 
-  <!-- Footer / Contact Section -->
   <footer id="contact">
     <h3>Contact Us</h3>
     <p>Email: zaffars593@gmail.com | Phone: +91 8097527096</p>
-    
-    <!-- Contact Form -->
-    <form class="contact-form" onsubmit="handleContactSubmit(event)">
-      <input type="text" id="contactName" placeholder="Your Name" required>
-      <input type="email" id="contactEmail" placeholder="Your Email" required>
-      <textarea id="contactMessage" placeholder="Your Message..." rows="4" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-
-    <p class="copyright">© 2026 MNZM SHOP. All rights reserved.</p>
+    <p>© 2026 MNZM SHOP. All rights reserved.</p>
   </footer>
 
-  <!-- Interactivity Scripts -->
   <script>
+    const standardColors = ['Red', 'White', 'Black', 'Blue', 'Green', 'Pink', 'Light Green', 'Light Pink', 'Maroon'];
     let cart = JSON.parse(localStorage.getItem('mnzmCart')) || [];
+    const OWNER_WHATSAPP = "918097527096";
+
+    let defaultReviews = {
+      'rinkle-plazo': [
+        { name: 'Priya', rating: 5, text: 'This is very good cloth. I just love it' },
+        { name: 'Saba Khan', rating: 5, text: 'Fabric quality is very soft and comfortable!' }
+      ],
+      'korean-pant': [
+        { name: 'Rhea S.', rating: 5, text: 'Awesome Korean pant fitting!' }
+      ]
+    };
+
+    let allReviews = JSON.parse(localStorage.getItem('mnzmCardReviews')) || defaultReviews;
 
     window.onload = function() {
+      renderCardColors();
+      renderAllCardReviews();
       updateCartUI();
     };
 
-    function addToCart(itemName, price) {
-      let existingItem = cart.find(item => item.name === itemName);
+    function renderCardColors() {
+      const colorContainers = [
+        'colors-rinkle-plazo',
+        'colors-plain-plazo',
+        'colors-cotton-leggings',
+        'colors-nylon-leggings',
+        'colors-ribbon-pant',
+        'colors-korean-pant',
+        'colors-baggie-pant',
+        'colors-bonker'
+      ];
+
+      colorContainers.forEach(id => {
+        let el = document.getElementById(id);
+        if (el) {
+          el.innerHTML = standardColors.map((color, idx) => 
+            `<button class="opt-btn ${idx === 0 ? 'selected' : ''}" onclick="selectCardOption(this)">${color}</button>`
+          ).join('');
+        }
+      });
+    }
+
+    function selectCardOption(btn) {
+      let group = btn.parentElement;
+      group.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function addCardToCart(btn, itemName, price) {
+      let card = btn.closest('.card-body');
+      let colorBtn = card.querySelector('.color-options .opt-btn.selected');
+      let sizeBtn = card.querySelector('.size-options .opt-btn.selected');
+      
+      let color = colorBtn ? colorBtn.innerText : 'Red';
+      let size = sizeBtn ? sizeBtn.innerText : 'Free Size';
+
+      addToCart(itemName, price, color, size);
+    }
+
+    function addToCart(itemName, price, color, size) {
+      let itemKey = `${itemName} (${color} / ${size})`;
+      let existingItem = cart.find(item => item.key === itemKey);
 
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
-        cart.push({ name: itemName, price: price, quantity: 1 });
+        cart.push({ key: itemKey, name: itemName, price: price, color: color, size: size, quantity: 1 });
       }
 
       saveCart();
       updateCartUI();
-      showToast(`${itemName} added to cart!`);
+      showToast(`${itemName} [${color}, ${size}] added to cart!`);
     }
 
     function changeQuantity(index, amount) {
@@ -149,12 +649,6 @@
       if (cart[index].quantity <= 0) {
         cart.splice(index, 1);
       }
-      saveCart();
-      updateCartUI();
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
       saveCart();
       updateCartUI();
     }
@@ -184,13 +678,12 @@
           <div class="cart-item">
             <div class="cart-item-details">
               <strong>${item.name}</strong>
-              <span>₹${item.price * item.quantity}</span>
+              <span>${item.color} | Size: ${item.size} | ₹${item.price * item.quantity}</span>
             </div>
             <div class="qty-controls">
               <button onclick="changeQuantity(${index}, -1)">-</button>
               <span>${item.quantity}</span>
               <button onclick="changeQuantity(${index}, 1)">+</button>
-              <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
             </div>
           </div>
         `).join('');
@@ -200,28 +693,68 @@
       }
     }
 
+    function toggleCart() {
+      document.getElementById('cartSidebar').classList.toggle('open');
+    }
+
     function showToast(message) {
       let toast = document.getElementById('toast');
       toast.innerText = message;
       toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2000);
+      setTimeout(() => { toast.classList.remove('show'); }, 2000);
     }
 
-    function checkout() {
+    function openCheckoutModal() {
       if (cart.length === 0) {
         alert("Your cart is empty!");
         return;
       }
-      let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      alert(`Thank you for shopping with MNZM SHOP!\nYour total amount is ₹${total}. Your order has been placed successfully!`);
-      clearCart();
-      toggleCart();
+      document.getElementById('checkoutModal').style.display = 'flex';
     }
 
-    function toggleCart() {
-      document.getElementById('cartSidebar').classList.toggle('open');
+    function closeCheckoutModal() {
+      document.getElementById('checkoutModal').style.display = 'none';
+    }
+
+    function handleOrderSubmission(event) {
+      event.preventDefault();
+
+      let name = document.getElementById('custName').value.trim();
+      let phone = document.getElementById('custPhone').value.trim();
+      let address = document.getElementById('custAddress').value.trim();
+      let payment = document.getElementById('custPayment').value;
+
+      if (phone.length < 10) {
+        alert("Please enter a valid 10-digit mobile number!");
+        return;
+      }
+
+      let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      let orderItemsText = cart.map((item, index) => 
+        `${index + 1}. ${item.name} | Color: *${item.color}* | Size: *${item.size}* | Qty: ${item.quantity} = ₹${item.price * item.quantity}`
+      ).join('\n');
+
+      let whatsappMessage = `🛍 *NEW ORDER - MNZM SHOP*\n` +
+        `----------------------------------------\n` +
+        `👤 *Customer Name:* ${name}\n` +
+        `📞 *Phone Number:* ${phone}\n` +
+        `📍 *Delivery Address:* ${address}\n` +
+        `💳 *Payment Method:* ${payment}\n` +
+        `----------------------------------------\n` +
+        `📦 *ORDER DETAILS:*\n${orderItemsText}\n` +
+        `----------------------------------------\n` +
+        `💰 *TOTAL AMOUNT:* ₹${total}\n\n` +
+        `Please confirm my order!`;
+
+      let encodedMessage = encodeURIComponent(whatsappMessage);
+      let whatsappURL = `https://wa.me/${OWNER_WHATSAPP}?text=${encodedMessage}`;
+
+      clearCart();
+      closeCheckoutModal();
+      toggleCart();
+
+      window.open(whatsappURL, '_blank');
     }
 
     function filterProducts() {
@@ -230,11 +763,7 @@
 
       cards.forEach(card => {
         let title = card.querySelector('h3').innerText.toLowerCase();
-        if (title.includes(input)) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
+        card.style.display = title.includes(input) ? 'flex' : 'none';
       });
     }
 
@@ -247,46 +776,49 @@
 
       cards.forEach(card => {
         if (category === 'all' || card.getAttribute('data-category') === category) {
-          card.style.display = 'block';
+          card.style.display = 'flex';
         } else {
           card.style.display = 'none';
         }
       });
     }
 
-    /* Modal Controls */
-    function openModal(title, price, imgUrl) {
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalPrice').innerText = '₹' + price;
-      document.getElementById('modalImg').src = imgUrl;
-      
-      let btn = document.getElementById('modalAddToCartBtn');
-      btn.onclick = function() {
-        addToCart(title, price);
-        closeModal();
-      };
-      
-      document.getElementById('productModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('productModal').style.display = 'none';
-    }
-
-    function handleContactSubmit(event) {
-      event.preventDefault();
-      let name = document.getElementById('contactName').value;
-      alert(`Thank you ${name}! Your message has been sent successfully.`);
-      event.target.reset();
-    }
-
-    window.onclick = function(event) {
-      let modal = document.getElementById('productModal');
-      if (event.target === modal) {
-        closeModal();
+    function renderAllCardReviews() {
+      for (let productId in allReviews) {
+        let container = document.getElementById(`reviews-${productId}`);
+        if (container) {
+          let list = allReviews[productId];
+          container.innerHTML = list.map(r => `
+            <div class="review-item">
+              <div class="review-head">
+                <span>${r.name}</span>
+                <span class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+              </div>
+              <div>${r.text}</div>
+            </div>
+          `).join('');
+        }
       }
-    };
-  </script>
+    }
 
+    function submitCardReview(event, productId) {
+      event.preventDefault();
+      let form = event.target;
+      let name = form.querySelector('.rev-name').value.trim();
+      let rating = parseInt(form.querySelector('.rev-rating').value);
+      let text = form.querySelector('.rev-msg').value.trim();
+
+      if (!allReviews[productId]) {
+        allReviews[productId] = [];
+      }
+
+      allReviews[productId].unshift({ name, rating, text });
+      localStorage.setItem('mnzmCardReviews', JSON.stringify(allReviews));
+
+      renderAllCardReviews();
+      form.reset();
+      showToast('Thank you for your review!');
+    }
+  </script>
 </body>
 </html>
