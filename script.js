@@ -1,14 +1,13 @@
 const OWNER_WHATSAPP = "918097527096";
-const standardColors = ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'];
 let cart = JSON.parse(localStorage.getItem('mnzmCart')) || [];
 let activeModalProductId = null;
 
-// Database: Safe image fallback for missing files
+// Product Database linked with 'images/' directory
 const productDetailsDatabase = {
   'bonker': {
     title: 'Bonker (Men & Women)',
     price: 250,
-    description: 'Premium heavy cotton blend unisex bonker pants. Features elastic waist with drawstring, printed logo design, side pockets, and soft texture.',
+    description: 'Premium heavy cotton blend unisex bonker pants with elastic waistband, drawstring, side pockets, and durable soft texture.',
     defaultImages: ['images/bonker1.png', 'images/bonker2.png'],
     colorImages: {
       'Dark Grey': ['images/bonker1.png', 'images/bonker2.png'],
@@ -23,7 +22,7 @@ const productDetailsDatabase = {
     title: 'Rinkle Plazo',
     price: 120,
     description: 'Trendy wrinkled fabric plazo with maximum stretchability and extreme comfort for all-day daily wear.',
-    defaultImages: ['images/rinkle1.png'],
+    defaultImages: ['images/rinkle1.png', 'images/rinkle2.png'],
     colorImages: {},
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['Free Size']
@@ -31,7 +30,7 @@ const productDetailsDatabase = {
   'printed-plazo': {
     title: 'Printed Plazo',
     price: 150,
-    description: 'Vibrant floral and geometric prints with soft rayon material for a graceful casual style.',
+    description: 'Vibrant floral and geometric prints crafted from soft rayon material for a graceful casual style.',
     defaultImages: ['images/printed1.png'],
     colorImages: {},
     colors: ['Multi-Color', 'Black Print', 'Navy Print'],
@@ -49,7 +48,7 @@ const productDetailsDatabase = {
   'cotton-leggings': {
     title: 'Cotton Leggings',
     price: 150,
-    description: '4-way stretch 100% pure combed cotton leggings with ankle length fit.',
+    description: '4-way stretch 100% pure combed cotton leggings with ankle length comfortable fit.',
     defaultImages: ['images/leggings1.png'],
     colorImages: {},
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
@@ -68,18 +67,17 @@ const productDetailsDatabase = {
 
 let defaultReviews = {
   'rinkle-plazo': [
-    { name: 'Priya', rating: 5, text: 'This is very good cloth. I just love it' },
-    { name: 'Saba Khan', rating: 5, text: 'Fabric quality is very soft and comfortable!' }
+    { name: 'Priya', rating: 5, text: 'Very comfortable fabric. Highly recommended!' },
+    { name: 'Saba Khan', rating: 5, text: 'Soft quality and perfect fit.' }
   ],
   'bonker': [
-    { name: 'Aman', rating: 5, text: 'Very comfortable for daily wear!' },
-    { name: 'Rahul M.', rating: 5, text: 'Print and fabric quality is top notch!' }
+    { name: 'Aman', rating: 5, text: 'Awesome quality for daily wear!' }
   ]
 };
 
 let allReviews = JSON.parse(localStorage.getItem('mnzmCardReviews')) || defaultReviews;
 
-// On Page Load Initialization
+// On Page Load
 window.onload = function() {
   renderCardColors();
   renderAllCardReviews();
@@ -99,7 +97,7 @@ function renderCardColors() {
   });
 }
 
-// Direct Card Level Color Swap
+// Card Color Selector
 function selectCardColor(productId, colorName, btn) {
   selectCardOption(btn);
   const prod = productDetailsDatabase[productId];
@@ -116,7 +114,7 @@ function selectCardColor(productId, colorName, btn) {
   }
 }
 
-// Open Modal Window
+// Open Product Detail Modal
 function openProductDetail(productId) {
   activeModalProductId = productId;
   const prod = productDetailsDatabase[productId];
@@ -140,7 +138,6 @@ function openProductDetail(productId) {
     `).join('');
   }
 
-  // Load modal images safely
   updateModalImages(prod, prod.colors[0]);
 
   const addBtn = document.getElementById('detailAddToCartBtn');
@@ -193,7 +190,6 @@ function closeDetailModal() {
   document.getElementById('productDetailModal').style.display = 'none';
 }
 
-// Hover Zoom Feature
 function setupZoomFeature() {
   const container = document.getElementById("zoomContainer");
   const img = document.getElementById("detailMainImg");
@@ -218,7 +214,6 @@ function setupZoomFeature() {
   });
 }
 
-// Option Selection Active Highlight
 function selectCardOption(btn) {
   if (!btn || !btn.parentElement) return;
   let siblingButtons = btn.parentElement.querySelectorAll('.opt-btn');
@@ -226,7 +221,7 @@ function selectCardOption(btn) {
   btn.classList.add('selected');
 }
 
-// Cart Logic
+// Cart Mechanics
 function addCardToCart(btn, title, price) {
   let card = btn.closest('.card');
   let selectedColor = card.querySelector('.color-options .opt-btn.selected')?.innerText || 'Default';
@@ -304,7 +299,7 @@ function toggleCart() {
   document.getElementById('cartSidebar').classList.toggle('open');
 }
 
-// WhatsApp Checkout Handler
+// WhatsApp Checkout
 function openCheckoutModal() {
   if (cart.length === 0) {
     alert("Your cart is empty!");
@@ -349,7 +344,6 @@ function handleOrderSubmission(e) {
   toggleCart();
 }
 
-// Filter Functions
 function filterCategory(cat, evt) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   evt.target.classList.add('active');
@@ -371,7 +365,6 @@ function filterProducts() {
   });
 }
 
-// Reviews Mechanics
 function submitCardReview(e, prodId) {
   e.preventDefault();
   let form = e.target;
