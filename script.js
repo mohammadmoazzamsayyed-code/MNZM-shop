@@ -3,18 +3,18 @@ const standardColors = ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'];
 let cart = JSON.parse(localStorage.getItem('mnzmCart')) || [];
 let activeModalProductId = null;
 
-// Database: Agar specific color image missing hai, toh default image use hogi
+// Database: Safe image fallback for missing files
 const productDetailsDatabase = {
   'bonker': {
     title: 'Bonker (Men & Women)',
     price: 250,
     description: 'Premium heavy cotton blend unisex bonker pants. Features elastic waist with drawstring, printed logo design, side pockets, and soft texture.',
-    defaultImages: ['images/bonker1.png', 'images/bonker2.png', 'images/bonker3.png', 'images/bonker4.png'],
+    defaultImages: ['images/bonker1.png', 'images/bonker2.png'],
     colorImages: {
-      'Dark Grey': ['images/bonker1.png', 'images/bonker2.png', 'images/bonker3.png', 'images/bonker4.png'],
-      'Black': ['images/bonker_black1.png'],
-      'Navy Blue': ['images/bonker_blue1.png'],
-      'Olive Green': ['images/bonker_green1.png']
+      'Dark Grey': ['images/bonker1.png', 'images/bonker2.png'],
+      'Black': ['images/bonker1.png'],
+      'Navy Blue': ['images/bonker2.png'],
+      'Olive Green': ['images/bonker1.png']
     },
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Olive Green'],
     sizes: ['XL', 'XXL', '3XL']
@@ -23,7 +23,7 @@ const productDetailsDatabase = {
     title: 'Rinkle Plazo',
     price: 120,
     description: 'Trendy wrinkled fabric plazo with maximum stretchability and extreme comfort for all-day daily wear.',
-    defaultImages: ['images/rinkle1.png', 'images/rinkle2.png', 'images/rinkle3.png', 'images/rinkle4.png'],
+    defaultImages: ['images/rinkle1.png'],
     colorImages: {},
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['Free Size']
@@ -32,7 +32,7 @@ const productDetailsDatabase = {
     title: 'Printed Plazo',
     price: 150,
     description: 'Vibrant floral and geometric prints with soft rayon material for a graceful casual style.',
-    defaultImages: ['images/printed1.png', 'images/printed2.png', 'images/printed3.png', 'images/printed4.png'],
+    defaultImages: ['images/printed1.png'],
     colorImages: {},
     colors: ['Multi-Color', 'Black Print', 'Navy Print'],
     sizes: ['Free Size']
@@ -41,7 +41,7 @@ const productDetailsDatabase = {
     title: 'Plain Plazo',
     price: 100,
     description: 'Minimalist solid colored flared plazos crafted from breathable fine quality cotton.',
-    defaultImages: ['images/plain1.png', 'images/plain2.png', 'images/plain3.png', 'images/plain4.png'],
+    defaultImages: ['images/plain1.png'],
     colorImages: {},
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['Free Size']
@@ -50,7 +50,7 @@ const productDetailsDatabase = {
     title: 'Cotton Leggings',
     price: 150,
     description: '4-way stretch 100% pure combed cotton leggings with ankle length fit.',
-    defaultImages: ['images/leggings1.png', 'images/leggings2.png', 'images/leggings3.png', 'images/leggings4.png'],
+    defaultImages: ['images/leggings1.png'],
     colorImages: {},
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['XL', 'XXL', '3XL']
@@ -59,7 +59,7 @@ const productDetailsDatabase = {
     title: 'Korean Pant',
     price: 280,
     description: 'Modern loose baggy aesthetic Korean trousers with side elastic and double stitching.',
-    defaultImages: ['images/korean1.png', 'images/korean2.png', 'images/korean3.png', 'images/korean4.png'],
+    defaultImages: ['images/korean1.png'],
     colorImages: {},
     colors: ['Dark Grey', 'Black', 'Beige', 'Olive Green'],
     sizes: ['XL', 'XXL', '3XL']
@@ -107,7 +107,9 @@ function selectCardColor(productId, colorName, btn) {
 
   let imgEl = document.getElementById(`card-img-${productId}`);
   if (imgEl) {
-    let images = (prod.colorImages && prod.colorImages[colorName]) ? prod.colorImages[colorName] : prod.defaultImages;
+    let images = (prod.colorImages && prod.colorImages[colorName] && prod.colorImages[colorName].length > 0) 
+                 ? prod.colorImages[colorName] 
+                 : prod.defaultImages;
     if (images && images.length > 0) {
       imgEl.src = images[0];
     }
@@ -175,7 +177,7 @@ function updateModalImages(prod, colorName) {
   const thumbsContainer = document.getElementById('detailThumbnails');
   if (thumbsContainer) {
     thumbsContainer.innerHTML = images.map((imgSrc, idx) => `
-      <img src="${imgSrc}" class="thumb-img ${idx === 0 ? 'active' : ''}" onclick="changeDetailImage('${imgSrc}', this)">
+      <img src="${imgSrc}" class="thumb-img ${idx === 0 ? 'active' : ''}" onclick="changeDetailImage('${imgSrc}', this)" onerror="this.style.display='none'">
     `).join('');
   }
 }
