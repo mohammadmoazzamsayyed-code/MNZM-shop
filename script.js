@@ -2,7 +2,6 @@ const OWNER_WHATSAPP = "918097527096";
 let cart = JSON.parse(localStorage.getItem('mnzmCart')) || [];
 let activeModalProductId = null;
 
-// Product Database linked with 'images/' directory
 const productDetailsDatabase = {
   'bonker': {
     title: 'Bonker (Men & Women)',
@@ -77,7 +76,6 @@ let defaultReviews = {
 
 let allReviews = JSON.parse(localStorage.getItem('mnzmCardReviews')) || defaultReviews;
 
-// On Page Load
 window.onload = function() {
   renderCardColors();
   renderAllCardReviews();
@@ -97,7 +95,6 @@ function renderCardColors() {
   });
 }
 
-// Card Color Selector
 function selectCardColor(productId, colorName, btn) {
   selectCardOption(btn);
   const prod = productDetailsDatabase[productId];
@@ -114,7 +111,6 @@ function selectCardColor(productId, colorName, btn) {
   }
 }
 
-// Open Product Detail Modal
 function openProductDetail(productId) {
   activeModalProductId = productId;
   const prod = productDetailsDatabase[productId];
@@ -221,7 +217,6 @@ function selectCardOption(btn) {
   btn.classList.add('selected');
 }
 
-// Cart Mechanics
 function addCardToCart(btn, title, price) {
   let card = btn.closest('.card');
   let selectedColor = card.querySelector('.color-options .opt-btn.selected')?.innerText || 'Default';
@@ -265,8 +260,8 @@ function updateCartUI() {
     <div class="cart-item">
       <div class="cart-item-details">
         <strong>${item.title}</strong>
-        <span>Color: ${item.color} | Size: ${item.size}</span>
-        <br><strong>₹${item.price} × ${item.qty} = ₹${item.price * item.qty}</strong>
+        <br><small style="color: var(--text-muted);">Color: ${item.color} | Size: ${item.size}</small>
+        <br><span style="color: var(--success); font-weight:700;">₹${item.price} × ${item.qty} = ₹${item.price * item.qty}</span>
       </div>
       <div class="qty-controls">
         <button onclick="changeQty(${idx}, -1)">-</button>
@@ -299,7 +294,6 @@ function toggleCart() {
   document.getElementById('cartSidebar').classList.toggle('open');
 }
 
-// WhatsApp Checkout
 function openCheckoutModal() {
   if (cart.length === 0) {
     alert("Your cart is empty!");
