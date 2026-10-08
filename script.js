@@ -1,0 +1,412 @@
+const OWNER_WHATSAPP = "918097527096";
+const standardColors = ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'];
+let cart = JSON.parse(localStorage.getItem('mnzmCart')) || [];
+let activeModalProductId = null;
+
+// Database: Agar specific color image missing hai, toh default image use hogi
+const productDetailsDatabase = {
+  'bonker': {
+    title: 'Bonker (Men & Women)',
+    price: 250,
+    description: 'Premium heavy cotton blend unisex bonker pants. Features elastic waist with drawstring, printed logo design, side pockets, and soft texture.',
+    defaultImages: ['images/bonker1.png', 'images/bonker2.png', 'images/bonker3.png', 'images/bonker4.png'],
+    colorImages: {
+      'Dark Grey': ['images/bonker1.png', 'images/bonker2.png', 'images/bonker3.png', 'images/bonker4.png'],
+      'Black': ['images/bonker_black1.png'],
+      'Navy Blue': ['images/bonker_blue1.png'],
+      'Olive Green': ['images/bonker_green1.png']
+    },
+    colors: ['Dark Grey', 'Black', 'Navy Blue', 'Olive Green'],
+    sizes: ['XL', 'XXL', '3XL']
+  },
+  'rinkle-plazo': {
+    title: 'Rinkle Plazo',
+    price: 120,
+    description: 'Trendy wrinkled fabric plazo with maximum stretchability and extreme comfort for all-day daily wear.',
+    defaultImages: ['images/rinkle1.png', 'images/rinkle2.png', 'images/rinkle3.png', 'images/rinkle4.png'],
+    colorImages: {},
+    colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
+    sizes: ['Free Size']
+  },
+  'printed-plazo': {
+    title: 'Printed Plazo',
+    price: 150,
+    description: 'Vibrant floral and geometric prints with soft rayon material for a graceful casual style.',
+    defaultImages: ['images/printed1.png', 'images/printed2.png', 'images/printed3.png', 'images/printed4.png'],
+    colorImages: {},
+    colors: ['Multi-Color', 'Black Print', 'Navy Print'],
+    sizes: ['Free Size']
+  },
+  'plain-plazo': {
+    title: 'Plain Plazo',
+    price: 100,
+    description: 'Minimalist solid colored flared plazos crafted from breathable fine quality cotton.',
+    defaultImages: ['images/plain1.png', 'images/plain2.png', 'images/plain3.png', 'images/plain4.png'],
+    colorImages: {},
+    colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
+    sizes: ['Free Size']
+  },
+  'cotton-leggings': {
+    title: 'Cotton Leggings',
+    price: 150,
+    description: '4-way stretch 100% pure combed cotton leggings with ankle length fit.',
+    defaultImages: ['images/leggings1.png', 'images/leggings2.png', 'images/leggings3.png', 'images/leggings4.png'],
+    colorImages: {},
+    colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
+    sizes: ['XL', 'XXL', '3XL']
+  },
+  'korean-pant': {
+    title: 'Korean Pant',
+    price: 280,
+    description: 'Modern loose baggy aesthetic Korean trousers with side elastic and double stitching.',
+    defaultImages: ['images/korean1.png', 'images/korean2.png', 'images/korean3.png', 'images/korean4.png'],
+    colorImages: {},
+    colors: ['Dark Grey', 'Black', 'Beige', 'Olive Green'],
+    sizes: ['XL', 'XXL', '3XL']
+  }
+};
+
+let defaultReviews = {
+  'rinkle-plazo': [
+    { name: 'Priya', rating: 5, text: 'This is very good cloth. I just love it' },
+    { name: 'Saba Khan', rating: 5, text: 'Fabric quality is very soft and comfortable!' }
+  ],
+  'bonker': [
+    { name: 'Aman', rating: 5, text: 'Very comfortable for daily wear!' },
+    { name: 'Rahul M.', rating: 5, text: 'Print and fabric quality is top notch!' }
+  ]
+};
+
+let allReviews = JSON.parse(localStorage.getItem('mnzmCardReviews')) || defaultReviews;
+
+// On Page Load Initialization
+window.onload = function() {
+  renderCardColors();
+  renderAllCardReviews();
+  updateCartUI();
+  setupZoomFeature();
+};
+
+function renderCardColors() {
+  Object.keys(productDetailsDatabase).forEach(productId => {
+    let prod = productDetailsDatabase[productId];
+    let el = document.getElementById(`colors-${productId}`);
+    if (el) {
+      el.innerHTML = prod.colors.map((color, idx) => 
+        `<button class="opt-btn ${idx === 0 ? 'selected' : ''}" onclick="selectCardColor('${productId}', '${color}', this)">${color}</button>`
+      ).join('');
+    }
+  });
+}
+
+// Direct Card Level Color Swap
+function selectCardColor(productId, colorName, btn) {
+  selectCardOption(btn);
+  const prod = productDetailsDatabase[productId];
+  if (!prod) return;
+
+  let imgEl = document.getElementById(`card-img-${productId}`);
+  if (imgEl) {
+    let images = (prod.colorImages && prod.colorImages[colorName]) ? prod.colorImages[colorName] : prod.defaultImages;
+    if (images && images.length > 0) {
+      imgEl.src = images[0];
+    }
+  }
+}
+
+// Open Modal Window
+function openProductDetail(productId) {
+  activeModalProductId = productId;
+  const prod = productDetailsDatabase[productId];
+  if (!prod) return;
+
+  document.getElementById('detailTitle').innerText = prod.title;
+  document.getElementById('detailPrice').innerText = `₹${prod.price}`;
+  document.getElementById('detailDescription').innerText = prod.description;
+
+  const colorContainer = document.getElementById('detailColors');
+  if (colorContainer) {
+    colorContainer.innerHTML = prod.colors.map((c, idx) => `
+      <button class="opt-btn ${idx === 0 ? 'selected' : ''}" onclick="selectModalColor('${c}', this)">${c}</button>
+    `).join('');
+  }
+
+  const sizeContainer = document.getElementById('detailSizes');
+  if (sizeContainer) {
+    sizeContainer.innerHTML = prod.sizes.map((s, idx) => `
+      <button class="opt-btn ${idx === 0 ? 'selected' : ''}" onclick="selectCardOption(this)">${s}</button>
+    `).join('');
+  }
+
+  // Load modal images safely
+  updateModalImages(prod, prod.colors[0]);
+
+  const addBtn = document.getElementById('detailAddToCartBtn');
+  if (addBtn) {
+    addBtn.onclick = function() {
+      let selectedColor = colorContainer?.querySelector('.opt-btn.selected')?.innerText || prod.colors[0];
+      let selectedSize = sizeContainer?.querySelector('.opt-btn.selected')?.innerText || prod.sizes[0];
+      addToCartDirect(prod.title, prod.price, selectedColor, selectedSize);
+      closeDetailModal();
+    };
+  }
+
+  document.getElementById('productDetailModal').style.display = 'flex';
+}
+
+function selectModalColor(colorName, btnEl) {
+  selectCardOption(btnEl);
+  const prod = productDetailsDatabase[activeModalProductId];
+  if (prod) {
+    updateModalImages(prod, colorName);
+  }
+}
+
+function updateModalImages(prod, colorName) {
+  let images = (prod.colorImages && prod.colorImages[colorName] && prod.colorImages[colorName].length > 0) 
+               ? prod.colorImages[colorName] 
+               : prod.defaultImages;
+
+  if (!images || images.length === 0) return;
+
+  const mainImg = document.getElementById('detailMainImg');
+  if (mainImg) mainImg.src = images[0];
+
+  const thumbsContainer = document.getElementById('detailThumbnails');
+  if (thumbsContainer) {
+    thumbsContainer.innerHTML = images.map((imgSrc, idx) => `
+      <img src="${imgSrc}" class="thumb-img ${idx === 0 ? 'active' : ''}" onclick="changeDetailImage('${imgSrc}', this)">
+    `).join('');
+  }
+}
+
+function changeDetailImage(src, thumbEl) {
+  const mainImg = document.getElementById('detailMainImg');
+  if (mainImg) mainImg.src = src;
+  document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+  if (thumbEl) thumbEl.classList.add('active');
+}
+
+function closeDetailModal() {
+  document.getElementById('productDetailModal').style.display = 'none';
+}
+
+// Hover Zoom Feature
+function setupZoomFeature() {
+  const container = document.getElementById("zoomContainer");
+  const img = document.getElementById("detailMainImg");
+
+  if (!container || !img) return;
+
+  container.addEventListener("mousemove", (e) => {
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const xPercent = (x / rect.width) * 100;
+    const yPercent = (y / rect.height) * 100;
+
+    img.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+    img.style.transform = "scale(2.2)";
+  });
+
+  container.addEventListener("mouseleave", () => {
+    img.style.transform = "scale(1)";
+    img.style.transformOrigin = "center center";
+  });
+}
+
+// Option Selection Active Highlight
+function selectCardOption(btn) {
+  if (!btn || !btn.parentElement) return;
+  let siblingButtons = btn.parentElement.querySelectorAll('.opt-btn');
+  siblingButtons.forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+// Cart Logic
+function addCardToCart(btn, title, price) {
+  let card = btn.closest('.card');
+  let selectedColor = card.querySelector('.color-options .opt-btn.selected')?.innerText || 'Default';
+  let selectedSize = card.querySelector('.size-options .opt-btn.selected')?.innerText || 'Free Size';
+
+  addToCartDirect(title, price, selectedColor, selectedSize);
+}
+
+function addToCartDirect(title, price, color, size) {
+  let existingIndex = cart.findIndex(item => item.title === title && item.color === color && item.size === size);
+
+  if (existingIndex > -1) {
+    cart[existingIndex].qty += 1;
+  } else {
+    cart.push({ title, price, color, size, qty: 1 });
+  }
+
+  saveAndUpdateCart();
+  showToast(`${title} added to cart!`);
+}
+
+function updateCartUI() {
+  const countEl = document.getElementById('cartCount');
+  const listEl = document.getElementById('cartItemsList');
+  const totalEl = document.getElementById('cartTotal');
+
+  if (!countEl || !listEl || !totalEl) return;
+
+  let totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+  let totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+  countEl.innerText = totalQty;
+  totalEl.innerText = totalPrice;
+
+  if (cart.length === 0) {
+    listEl.innerHTML = '<p style="text-align:center; color: var(--text-muted); margin-top: 2rem;">No items added yet.</p>';
+    return;
+  }
+
+  listEl.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item">
+      <div class="cart-item-details">
+        <strong>${item.title}</strong>
+        <span>Color: ${item.color} | Size: ${item.size}</span>
+        <br><strong>₹${item.price} × ${item.qty} = ₹${item.price * item.qty}</strong>
+      </div>
+      <div class="qty-controls">
+        <button onclick="changeQty(${idx}, -1)">-</button>
+        <span>${item.qty}</span>
+        <button onclick="changeQty(${idx}, 1)">+</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function changeQty(index, change) {
+  cart[index].qty += change;
+  if (cart[index].qty <= 0) {
+    cart.splice(index, 1);
+  }
+  saveAndUpdateCart();
+}
+
+function clearCart() {
+  cart = [];
+  saveAndUpdateCart();
+}
+
+function saveAndUpdateCart() {
+  localStorage.setItem('mnzmCart', JSON.stringify(cart));
+  updateCartUI();
+}
+
+function toggleCart() {
+  document.getElementById('cartSidebar').classList.toggle('open');
+}
+
+// WhatsApp Checkout Handler
+function openCheckoutModal() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+  document.getElementById('checkoutModal').style.display = 'flex';
+}
+
+function closeCheckoutModal() {
+  document.getElementById('checkoutModal').style.display = 'none';
+}
+
+function handleOrderSubmission(e) {
+  e.preventDefault();
+
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const address = document.getElementById('custAddress').value.trim();
+  const pincode = document.getElementById('custPincode').value.trim();
+  const payment = document.getElementById('custPayment').value;
+
+  let orderDetails = cart.map((item, i) => `${i + 1}. *${item.title}*\n   - Color: ${item.color}\n   - Size: ${item.size}\n   - Qty: ${item.qty}\n   - Price: ₹${item.price * item.qty}`).join('\n\n');
+  let totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+  let message = `🛍️ *NEW ORDER - MNZM SHOP*\n\n` +
+    `👤 *Customer Details:*\n` +
+    `• Name: ${name}\n` +
+    `• Phone: ${phone}\n` +
+    `• Address: ${address}\n` +
+    `• Pincode: ${pincode}\n` +
+    `• Payment Mode: ${payment}\n\n` +
+    `📦 *Order Summary:*\n${orderDetails}\n\n` +
+    `💰 *Total Amount:* ₹${totalPrice}\n\n` +
+    `Please confirm my order. Thank you!`;
+
+  let encodedMsg = encodeURIComponent(message);
+  let whatsappUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodedMsg}`;
+
+  window.open(whatsappUrl, '_blank');
+  clearCart();
+  closeCheckoutModal();
+  toggleCart();
+}
+
+// Filter Functions
+function filterCategory(cat, evt) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  evt.target.classList.add('active');
+
+  document.querySelectorAll('.card').forEach(card => {
+    if (cat === 'all' || card.getAttribute('data-category') === cat) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function filterProducts() {
+  let query = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.card').forEach(card => {
+    let title = card.querySelector('h3').innerText.toLowerCase();
+    card.style.display = title.includes(query) ? 'flex' : 'none';
+  });
+}
+
+// Reviews Mechanics
+function submitCardReview(e, prodId) {
+  e.preventDefault();
+  let form = e.target;
+  let name = form.querySelector('.rev-name').value;
+  let rating = parseInt(form.querySelector('.rev-rating').value);
+  let text = form.querySelector('.rev-msg').value;
+
+  if (!allReviews[prodId]) allReviews[prodId] = [];
+  allReviews[prodId].push({ name, rating, text });
+
+  localStorage.setItem('mnzmCardReviews', JSON.stringify(allReviews));
+  renderAllCardReviews();
+  form.reset();
+  showToast("Review submitted!");
+}
+
+function renderAllCardReviews() {
+  Object.keys(allReviews).forEach(id => {
+    let container = document.getElementById(`reviews-${id}`);
+    if (container) {
+      container.innerHTML = allReviews[id].map(r => `
+        <div class="review-item">
+          <div class="review-head">
+            <span>${r.name}</span>
+            <span class="star-gold">${'★'.repeat(r.rating)}</span>
+          </div>
+          <div>${r.text}</div>
+        </div>
+      `).join('');
+    }
+  });
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.innerText = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
