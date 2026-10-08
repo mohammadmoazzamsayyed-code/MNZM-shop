@@ -4,112 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MNZM SHOP - Premium Bottomwear</title>
-  <style>
-    :root {
-      --primary: #0f5132;
-      --primary-hover: #0c3e27;
-      --accent: #1e3a8a;
-      --accent-hover: #1e1b4b;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #0f172a;
-      --text-muted: #475569;
-      --border: #e2e8f0;
-      --radius: 12px;
-      --star-color: #f59e0b;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 60px; }
-
-    /* Top Navbar */
-    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
-    .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; color: var(--primary); }
-    .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
-    .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; }
-    .cart-btn { background: var(--primary); color: white !important; padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(15, 81, 50, 0.2); transition: transform 0.2s, background 0.2s; }
-    .cart-btn:hover { transform: scale(1.05); background: var(--primary-hover); }
-
-    /* Hero Banner */
-    .hero { text-align: center; padding: 3rem 1rem; background: linear-gradient(135deg, #0f5132 0%, #062c1b 100%); color: white; }
-    .hero h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-    .hero p { color: #a7f3d0; margin-bottom: 1.5rem; }
-    .search-box input { width: 90%; max-width: 450px; padding: 0.8rem 1.2rem; border-radius: 25px; border: none; outline: none; font-size: 1rem; }
-
-    /* Category Filter Buttons */
-    .category-buttons { display: flex; justify-content: center; gap: 0.5rem; margin: 2rem 1rem 1rem; flex-wrap: wrap; }
-    .cat-btn { padding: 0.5rem 1.2rem; border: 1px solid var(--border); background: white; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-    .cat-btn.active, .cat-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-
-    /* Product Grid */
-    main { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
-    .section-title { text-align: center; margin-top: 1rem; font-size: 1.8rem; }
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; margin-top: 1.5rem; }
-
-    /* Product Card Design */
-    .card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column; }
-    .card img { width: 100%; height: 320px; object-fit: cover; }
-    .card-body { padding: 1.4rem; display: flex; flex-direction: column; flex-grow: 1; }
-    .card h3 { font-size: 1.3rem; margin-bottom: 0.3rem; }
-    .price { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem; }
-
-    .option-group { margin-bottom: 1rem; }
-    .option-group label { font-size: 0.88rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem; font-weight: 700; }
-    .options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .opt-btn { padding: 0.4rem 0.8rem; border: 1px solid var(--border); background: #f8fafc; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; }
-    .opt-btn:hover { border-color: var(--primary); }
-    .opt-btn.selected { background: var(--primary); color: white; border-color: var(--primary); }
-
-    .buy-btn { width: 100%; padding: 0.85rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 0.5rem; margin-bottom: 1.2rem; transition: background 0.2s; }
-    .buy-btn:hover { background: var(--primary-hover); }
-
-    /* Reviews Section inside Card */
-    .card-reviews-wrapper { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: auto; background: #f1f5f9; padding: 1rem; border-radius: 8px; }
-    .reviews-title { font-size: 0.95rem; font-weight: bold; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; }
-    .review-item { background: white; padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 0.5rem; font-size: 0.85rem; }
-    .review-head { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 0.2rem; }
-    .review-stars { color: var(--star-color); }
-
-    .direct-review-form { margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem; }
-    .direct-review-form input, .direct-review-form select, .direct-review-form textarea { width: 100%; padding: 0.55rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; outline: none; }
-    .submit-rev-btn { background: var(--accent); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; }
-    .submit-rev-btn:hover { background: var(--accent-hover); }
-
-    /* Cart Drawer Sidebar */
-    .cart-sidebar { position: fixed; top: 0; right: -380px; width: 100%; max-width: 380px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); z-index: 300; transition: right 0.3s ease; display: flex; flex-direction: column; }
-    .cart-sidebar.open { right: 0; }
-    .cart-header { padding: 1.2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-    .close-btn { font-size: 1.5rem; cursor: pointer; }
-    .cart-body { padding: 1.2rem; flex-grow: 1; overflow-y: auto; }
-    .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); }
-    .cart-item-details strong { display: block; font-size: 0.95rem; }
-    .cart-item-details span { font-size: 0.85rem; color: var(--text-muted); }
-    .qty-controls { display: flex; align-items: center; gap: 0.5rem; }
-    .qty-controls button { width: 24px; height: 24px; border: 1px solid var(--border); background: #f1f5f9; cursor: pointer; border-radius: 4px; font-weight: bold; }
-    .cart-footer { padding: 1.2rem; border-top: 1px solid var(--border); }
-    .total-price { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem; }
-    .checkout-btn, .clear-btn { width: 100%; padding: 0.8rem; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; margin-bottom: 0.5rem; }
-    .checkout-btn { background: #16a34a; color: white; }
-    .clear-btn { background: #ef4444; color: white; }
-
-    /* Modal & Toast */
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 400; justify-content: center; align-items: center; padding: 1rem; }
-    .modal-content { background: white; border-radius: var(--radius); max-width: 500px; width: 100%; padding: 1.5rem; position: relative; }
-    .close-modal { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; cursor: pointer; }
-    .checkout-form h2 { margin-bottom: 1rem; font-size: 1.3rem; }
-    .form-group { margin-bottom: 1rem; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; outline: none; }
-    .submit-order-btn { width: 100%; padding: 0.85rem; background: #25d366; color: white; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
-    .toast { position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 0.8rem 1.5rem; border-radius: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: bottom 0.3s ease; z-index: 500; font-weight: 600; }
-    .toast.show { bottom: 20px; }
-
-    footer { text-align: center; padding: 2rem 1rem; background: #062c1b; color: white; margin-top: 3rem; }
-    footer p { color: #a7f3d0; font-size: 0.9rem; margin-top: 0.5rem; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+  <!-- Toast Notification -->
   <div id="toast" class="toast">Item added to cart!</div>
 
   <!-- Navigation Bar -->
@@ -156,7 +55,11 @@
         </div>
         <div class="form-group">
           <label>Delivery Address *</label>
-          <textarea id="custAddress" rows="3" required placeholder="Flat No, Building, Street, Pincode"></textarea>
+          <textarea id="custAddress" rows="2" required placeholder="House/Flat No, Street Name, Area"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Pincode *</label>
+          <input type="text" id="custPincode" required placeholder="6-digit Pincode">
         </div>
         <div class="form-group">
           <label>Payment Method</label>
@@ -167,6 +70,40 @@
         </div>
         <button type="submit" class="submit-order-btn">Place Order via WhatsApp 💬</button>
       </form>
+    </div>
+  </div>
+
+  <!-- Product Details Preview Modal -->
+  <div id="productDetailModal" class="modal">
+    <div class="modal-content product-detail-modal-content">
+      <span class="close-modal" onclick="closeDetailModal()">&times;</span>
+      
+      <div class="gallery-container">
+        <!-- Main Image with Hover Zoom -->
+        <div class="zoom-box" id="zoomContainer">
+          <img id="detailMainImg" class="main-image-display" src="" alt="Product Detail">
+        </div>
+        <!-- 4 Angle Thumbnails -->
+        <div class="thumbnails-row" id="detailThumbnails"></div>
+      </div>
+
+      <div class="detail-info">
+        <h2 id="detailTitle">Product Name</h2>
+        <p id="detailPrice">₹0</p>
+        <p id="detailDescription">High-quality fabric designed for ultimate comfort and durability.</p>
+
+        <div class="option-group">
+          <label>Select Color:</label>
+          <div class="options color-options" id="detailColors"></div>
+        </div>
+
+        <div class="option-group">
+          <label>Select Size:</label>
+          <div class="options size-options" id="detailSizes"></div>
+        </div>
+
+        <button class="buy-btn" id="detailAddToCartBtn">Add to Cart 🛒</button>
+      </div>
     </div>
   </div>
 
@@ -193,11 +130,59 @@
 
     <div class="product-grid" id="productGrid">
 
+      <!-- Bonker (Unisex) -->
+      <div class="card" data-category="joggers" data-id="bonker">
+        <div class="card-img-wrapper" onclick="openProductDetail('bonker')">
+          <img id="card-img-bonker" loading="lazy" src="images/bonker1.png" alt="Bonker">
+          <span class="view-details-badge">🔍 Click for 4 Angles & Zoom</span>
+        </div>
+        <div class="card-body">
+          <h3 onclick="openProductDetail('bonker')">Bonker (Men & Women)</h3>
+          <p class="price">₹250</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-bonker"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Bonker (Men & Women)', 250)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('bonker')">View All 4 Angles & Zoom 🔍</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span class="star-gold">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-bonker"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'bonker')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
       <!-- Rinkle Plazo -->
       <div class="card" data-category="plazo" data-id="rinkle-plazo">
-        <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800&auto=format&fit=crop" alt="Rinkle Plazo" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Rinkle+Plazo'">
+        <div class="card-img-wrapper" onclick="openProductDetail('rinkle-plazo')">
+          <img id="card-img-rinkle-plazo" loading="lazy" src="images/rinkle1.png" alt="Rinkle Plazo">
+          <span class="view-details-badge">🔍 Click for 4 Angles & Zoom</span>
+        </div>
         <div class="card-body">
-          <h3>Rinkle Plazo</h3>
+          <h3 onclick="openProductDetail('rinkle-plazo')">Rinkle Plazo</h3>
           <p class="price">₹120</p>
           <div class="option-group">
             <label>Tap to Select Color:</label>
@@ -210,11 +195,12 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Rinkle Plazo', 120)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('rinkle-plazo')">View All 4 Angles & Zoom 🔍</button>
 
           <div class="card-reviews-wrapper">
             <div class="reviews-title">
               <span>Customer Reviews</span>
-              <span style="color: var(--star-color);">★★★★★</span>
+              <span class="star-gold">★★★★★</span>
             </div>
             <div class="reviews-list" id="reviews-rinkle-plazo"></div>
 
@@ -234,15 +220,16 @@
 
       <!-- Printed Plazo -->
       <div class="card" data-category="plazo" data-id="printed-plazo">
-        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Printed Plazo" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Printed+Plazo'">
+        <div class="card-img-wrapper" onclick="openProductDetail('printed-plazo')">
+          <img id="card-img-printed-plazo" loading="lazy" src="images/printed1.png" alt="Printed Plazo">
+          <span class="view-details-badge">🔍 Click for 4 Angles & Zoom</span>
+        </div>
         <div class="card-body">
-          <h3>Printed Plazo</h3>
+          <h3 onclick="openProductDetail('printed-plazo')">Printed Plazo</h3>
           <p class="price">₹150</p>
           <div class="option-group">
             <label>Tap to Select Color:</label>
-            <div class="options color-options">
-              <button class="opt-btn selected" onclick="selectCardOption(this)">Multi-Color</button>
-            </div>
+            <div class="options color-options" id="colors-printed-plazo"></div>
           </div>
           <div class="option-group">
             <label>Select Size:</label>
@@ -251,11 +238,12 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Printed Plazo', 150)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('printed-plazo')">View All 4 Angles & Zoom 🔍</button>
 
           <div class="card-reviews-wrapper">
             <div class="reviews-title">
               <span>Customer Reviews</span>
-              <span style="color: var(--star-color);">★★★★☆</span>
+              <span class="star-gold">★★★★☆</span>
             </div>
             <div class="reviews-list" id="reviews-printed-plazo"></div>
 
@@ -275,9 +263,12 @@
 
       <!-- Plain Plazo -->
       <div class="card" data-category="plazo" data-id="plain-plazo">
-        <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800&auto=format&fit=crop" alt="Plain Plazo" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Plain+Plazo'">
+        <div class="card-img-wrapper" onclick="openProductDetail('plain-plazo')">
+          <img id="card-img-plain-plazo" loading="lazy" src="images/plain1.png" alt="Plain Plazo">
+          <span class="view-details-badge">🔍 Click for 4 Angles & Zoom</span>
+        </div>
         <div class="card-body">
-          <h3>Plain Plazo</h3>
+          <h3 onclick="openProductDetail('plain-plazo')">Plain Plazo</h3>
           <p class="price">₹100</p>
           <div class="option-group">
             <label>Tap to Select Color:</label>
@@ -290,11 +281,12 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Plain Plazo', 100)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('plain-plazo')">View All 4 Angles & Zoom 🔍</button>
 
           <div class="card-reviews-wrapper">
             <div class="reviews-title">
               <span>Customer Reviews</span>
-              <span style="color: var(--star-color);">★★★★★</span>
+              <span class="star-gold">★★★★★</span>
             </div>
             <div class="reviews-list" id="reviews-plain-plazo"></div>
 
@@ -314,9 +306,12 @@
 
       <!-- Cotton Leggings -->
       <div class="card" data-category="leggings" data-id="cotton-leggings">
-        <img src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=800&auto=format&fit=crop" alt="Cotton Leggings" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Cotton+Leggings'">
+        <div class="card-img-wrapper" onclick="openProductDetail('cotton-leggings')">
+          <img id="card-img-cotton-leggings" loading="lazy" src="images/leggings1.png" alt="Cotton Leggings">
+          <span class="view-details-badge">🔍 Click for 4 Angles & Zoom</span>
+        </div>
         <div class="card-body">
-          <h3>Cotton Leggings</h3>
+          <h3 onclick="openProductDetail('cotton-leggings')">Cotton Leggings</h3>
           <p class="price">₹150</p>
           <div class="option-group">
             <label>Tap to Select Color:</label>
@@ -331,11 +326,12 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Cotton Leggings', 150)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('cotton-leggings')">View All 4 Angles & Zoom 🔍</button>
 
           <div class="card-reviews-wrapper">
             <div class="reviews-title">
               <span>Customer Reviews</span>
-              <span style="color: var(--star-color);">★★★★★</span>
+              <span class="star-gold">★★★★★</span>
             </div>
             <div class="reviews-list" id="reviews-cotton-leggings"></div>
 
@@ -353,93 +349,14 @@
         </div>
       </div>
 
-      <!-- Nylon Leggings -->
-      <div class="card" data-category="leggings" data-id="nylon-leggings">
-        <img src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=800&auto=format&fit=crop" alt="Nylon Leggings" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Nylon+Leggings'">
-        <div class="card-body">
-          <h3>Nylon Leggings</h3>
-          <p class="price">₹180</p>
-          <div class="option-group">
-            <label>Tap to Select Color:</label>
-            <div class="options color-options" id="colors-nylon-leggings"></div>
-          </div>
-          <div class="option-group">
-            <label>Select Size:</label>
-            <div class="options size-options">
-              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
-              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
-              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
-            </div>
-          </div>
-          <button class="buy-btn" onclick="addCardToCart(this, 'Nylon Leggings', 180)">Add to Cart 🛒</button>
-
-          <div class="card-reviews-wrapper">
-            <div class="reviews-title">
-              <span>Customer Reviews</span>
-              <span style="color: var(--star-color);">★★★★☆</span>
-            </div>
-            <div class="reviews-list" id="reviews-nylon-leggings"></div>
-
-            <form class="direct-review-form" onsubmit="submitCardReview(event, 'nylon-leggings')">
-              <input type="text" class="rev-name" placeholder="Your Name" required>
-              <select class="rev-rating" required>
-                <option value="5">★★★★★ (5/5)</option>
-                <option value="4">★★★★☆ (4/5)</option>
-                <option value="3">★★★☆☆ (3/5)</option>
-              </select>
-              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
-              <button type="submit" class="submit-rev-btn">Submit Review</button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- Ribbon Pant -->
-      <div class="card" data-category="pants" data-id="ribbon-pant">
-        <img src="https://images.unsplash.com/photo-1517445312882-bc9910d016b7?q=80&w=800&auto=format&fit=crop" alt="Ribbon Pant" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Ribbon+Pant'">
-        <div class="card-body">
-          <h3>Ribbon Pant</h3>
-          <p class="price">₹220</p>
-          <div class="option-group">
-            <label>Tap to Select Color:</label>
-            <div class="options color-options" id="colors-ribbon-pant"></div>
-          </div>
-          <div class="option-group">
-            <label>Select Size:</label>
-            <div class="options size-options">
-              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
-              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
-              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
-            </div>
-          </div>
-          <button class="buy-btn" onclick="addCardToCart(this, 'Ribbon Pant', 220)">Add to Cart 🛒</button>
-
-          <div class="card-reviews-wrapper">
-            <div class="reviews-title">
-              <span>Customer Reviews</span>
-              <span style="color: var(--star-color);">★★★★★</span>
-            </div>
-            <div class="reviews-list" id="reviews-ribbon-pant"></div>
-
-            <form class="direct-review-form" onsubmit="submitCardReview(event, 'ribbon-pant')">
-              <input type="text" class="rev-name" placeholder="Your Name" required>
-              <select class="rev-rating" required>
-                <option value="5">★★★★★ (5/5)</option>
-                <option value="4">★★★★☆ (4/5)</option>
-                <option value="3">★★★☆☆ (3/5)</option>
-              </select>
-              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
-              <button type="submit" class="submit-rev-btn">Submit Review</button>
-            </form>
-          </div>
-        </div>
-      </div>
-
       <!-- Korean Pant -->
       <div class="card" data-category="pants" data-id="korean-pant">
-        <img src="https://images.unsplash.com/photo-1584370848010-d7fe6bc767ec?q=80&w=800&auto=format&fit=crop" alt="Korean Pant" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Korean+Pant'">
+        <div class="card-img-wrapper" onclick="openProductDetail('korean-pant')">
+          <img id="card-img-korean-pant" loading="lazy" src="images/korean1.png" alt="Korean Pant">
+          <span class="view-details-badge">🔍 Click for 4 Angles & Zoom</span>
+        </div>
         <div class="card-body">
-          <h3>Korean Pant</h3>
+          <h3 onclick="openProductDetail('korean-pant')">Korean Pant</h3>
           <p class="price">₹280</p>
           <div class="option-group">
             <label>Tap to Select Color:</label>
@@ -454,97 +371,16 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Korean Pant', 280)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('korean-pant')">View All 4 Angles & Zoom 🔍</button>
 
           <div class="card-reviews-wrapper">
             <div class="reviews-title">
               <span>Customer Reviews</span>
-              <span style="color: var(--star-color);">★★★★★</span>
+              <span class="star-gold">★★★★★</span>
             </div>
             <div class="reviews-list" id="reviews-korean-pant"></div>
 
             <form class="direct-review-form" onsubmit="submitCardReview(event, 'korean-pant')">
-              <input type="text" class="rev-name" placeholder="Your Name" required>
-              <select class="rev-rating" required>
-                <option value="5">★★★★★ (5/5)</option>
-                <option value="4">★★★★☆ (4/5)</option>
-                <option value="3">★★★☆☆ (3/5)</option>
-              </select>
-              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
-              <button type="submit" class="submit-rev-btn">Submit Review</button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- Baggie Pant (Girls) -->
-      <div class="card" data-category="pants" data-id="baggie-pant">
-        <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop" alt="Baggie Pant (Girls)" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Baggie+Pant'">
-        <div class="card-body">
-          <h3>Baggie Pant (Girls)</h3>
-          <p class="price">₹260</p>
-          <div class="option-group">
-            <label>Tap to Select Color:</label>
-            <div class="options color-options" id="colors-baggie-pant"></div>
-          </div>
-          <div class="option-group">
-            <label>Select Size:</label>
-            <div class="options size-options">
-              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
-              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
-              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
-            </div>
-          </div>
-          <button class="buy-btn" onclick="addCardToCart(this, 'Baggie Pant (Girls)', 260)">Add to Cart 🛒</button>
-
-          <div class="card-reviews-wrapper">
-            <div class="reviews-title">
-              <span>Customer Reviews</span>
-              <span style="color: var(--star-color);">★★★★☆</span>
-            </div>
-            <div class="reviews-list" id="reviews-baggie-pant"></div>
-
-            <form class="direct-review-form" onsubmit="submitCardReview(event, 'baggie-pant')">
-              <input type="text" class="rev-name" placeholder="Your Name" required>
-              <select class="rev-rating" required>
-                <option value="5">★★★★★ (5/5)</option>
-                <option value="4">★★★★☆ (4/5)</option>
-                <option value="3">★★★☆☆ (3/5)</option>
-              </select>
-              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
-              <button type="submit" class="submit-rev-btn">Submit Review</button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bonker (Unisex) -->
-      <div class="card" data-category="joggers" data-id="bonker">
-        <img src="https://images.unsplash.com/photo-1552902865-b72c031ac5ea?q=80&w=800&auto=format&fit=crop" alt="Bonker (Men & Women)" onerror="this.src='https://placehold.co/600x600/0f5132/ffffff?text=Bonker'">
-        <div class="card-body">
-          <h3>Bonker (Men & Women)</h3>
-          <p class="price">₹250</p>
-          <div class="option-group">
-            <label>Tap to Select Color:</label>
-            <div class="options color-options" id="colors-bonker"></div>
-          </div>
-          <div class="option-group">
-            <label>Select Size:</label>
-            <div class="options size-options">
-              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
-              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
-              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
-            </div>
-          </div>
-          <button class="buy-btn" onclick="addCardToCart(this, 'Bonker (Men & Women)', 250)">Add to Cart 🛒</button>
-
-          <div class="card-reviews-wrapper">
-            <div class="reviews-title">
-              <span>Customer Reviews</span>
-              <span style="color: var(--star-color);">★★★★★</span>
-            </div>
-            <div class="reviews-list" id="reviews-bonker"></div>
-
-            <form class="direct-review-form" onsubmit="submitCardReview(event, 'bonker')">
               <input type="text" class="rev-name" placeholder="Your Name" required>
               <select class="rev-rating" required>
                 <option value="5">★★★★★ (5/5)</option>
@@ -567,258 +403,6 @@
     <p>© 2026 MNZM SHOP. All rights reserved.</p>
   </footer>
 
-  <script>
-    const standardColors = ['Red', 'White', 'Black', 'Blue', 'Green', 'Pink', 'Light Green', 'Light Pink', 'Maroon'];
-    let cart = JSON.parse(localStorage.getItem('mnzmCart')) || [];
-    const OWNER_WHATSAPP = "918097527096";
-
-    let defaultReviews = {
-      'rinkle-plazo': [
-        { name: 'Priya', rating: 5, text: 'This is very good cloth. I just love it' },
-        { name: 'Saba Khan', rating: 5, text: 'Fabric quality is very soft and comfortable!' }
-      ],
-      'korean-pant': [
-        { name: 'Rhea S.', rating: 5, text: 'Awesome Korean pant fitting!' }
-      ]
-    };
-
-    let allReviews = JSON.parse(localStorage.getItem('mnzmCardReviews')) || defaultReviews;
-
-    window.onload = function() {
-      renderCardColors();
-      renderAllCardReviews();
-      updateCartUI();
-    };
-
-    function renderCardColors() {
-      const colorContainers = [
-        'colors-rinkle-plazo',
-        'colors-plain-plazo',
-        'colors-cotton-leggings',
-        'colors-nylon-leggings',
-        'colors-ribbon-pant',
-        'colors-korean-pant',
-        'colors-baggie-pant',
-        'colors-bonker'
-      ];
-
-      colorContainers.forEach(id => {
-        let el = document.getElementById(id);
-        if (el) {
-          el.innerHTML = standardColors.map((color, idx) => 
-            `<button class="opt-btn ${idx === 0 ? 'selected' : ''}" onclick="selectCardOption(this)">${color}</button>`
-          ).join('');
-        }
-      });
-    }
-
-    function selectCardOption(btn) {
-      let group = btn.parentElement;
-      group.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-    }
-
-    function addCardToCart(btn, itemName, price) {
-      let card = btn.closest('.card-body');
-      let colorBtn = card.querySelector('.color-options .opt-btn.selected');
-      let sizeBtn = card.querySelector('.size-options .opt-btn.selected');
-      
-      let color = colorBtn ? colorBtn.innerText : 'Red';
-      let size = sizeBtn ? sizeBtn.innerText : 'Free Size';
-
-      addToCart(itemName, price, color, size);
-    }
-
-    function addToCart(itemName, price, color, size) {
-      let itemKey = `${itemName} (${color} / ${size})`;
-      let existingItem = cart.find(item => item.key === itemKey);
-
-      if (existingItem) {
-        existingItem.quantity += 1;
-      } else {
-        cart.push({ key: itemKey, name: itemName, price: price, color: color, size: size, quantity: 1 });
-      }
-
-      saveCart();
-      updateCartUI();
-      showToast(`${itemName} [${color}, ${size}] added to cart!`);
-    }
-
-    function changeQuantity(index, amount) {
-      cart[index].quantity += amount;
-      if (cart[index].quantity <= 0) {
-        cart.splice(index, 1);
-      }
-      saveCart();
-      updateCartUI();
-    }
-
-    function clearCart() {
-      cart = [];
-      saveCart();
-      updateCartUI();
-    }
-
-    function saveCart() {
-      localStorage.setItem('mnzmCart', JSON.stringify(cart));
-    }
-
-    function updateCartUI() {
-      let totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-      document.getElementById('cartCount').innerText = totalCount;
-      
-      let itemsList = document.getElementById('cartItemsList');
-      let totalElement = document.getElementById('cartTotal');
-
-      if (cart.length === 0) {
-        itemsList.innerHTML = 'No items added yet.';
-        totalElement.innerText = '0';
-      } else {
-        itemsList.innerHTML = cart.map((item, index) => `
-          <div class="cart-item">
-            <div class="cart-item-details">
-              <strong>${item.name}</strong>
-              <span>${item.color} | Size: ${item.size} | ₹${item.price * item.quantity}</span>
-            </div>
-            <div class="qty-controls">
-              <button onclick="changeQuantity(${index}, -1)">-</button>
-              <span>${item.quantity}</span>
-              <button onclick="changeQuantity(${index}, 1)">+</button>
-            </div>
-          </div>
-        `).join('');
-
-        let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        totalElement.innerText = total;
-      }
-    }
-
-    function toggleCart() {
-      document.getElementById('cartSidebar').classList.toggle('open');
-    }
-
-    function showToast(message) {
-      let toast = document.getElementById('toast');
-      toast.innerText = message;
-      toast.classList.add('show');
-      setTimeout(() => { toast.classList.remove('show'); }, 2000);
-    }
-
-    function openCheckoutModal() {
-      if (cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-      }
-      document.getElementById('checkoutModal').style.display = 'flex';
-    }
-
-    function closeCheckoutModal() {
-      document.getElementById('checkoutModal').style.display = 'none';
-    }
-
-    function handleOrderSubmission(event) {
-      event.preventDefault();
-
-      let name = document.getElementById('custName').value.trim();
-      let phone = document.getElementById('custPhone').value.trim();
-      let address = document.getElementById('custAddress').value.trim();
-      let payment = document.getElementById('custPayment').value;
-
-      if (phone.length < 10) {
-        alert("Please enter a valid 10-digit mobile number!");
-        return;
-      }
-
-      let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      
-      let orderItemsText = cart.map((item, index) => 
-        `${index + 1}. ${item.name} | Color: *${item.color}* | Size: *${item.size}* | Qty: ${item.quantity} = ₹${item.price * item.quantity}`
-      ).join('\n');
-
-      let whatsappMessage = `🛍 *NEW ORDER - MNZM SHOP*\n` +
-        `----------------------------------------\n` +
-        `👤 *Customer Name:* ${name}\n` +
-        `📞 *Phone Number:* ${phone}\n` +
-        `📍 *Delivery Address:* ${address}\n` +
-        `💳 *Payment Method:* ${payment}\n` +
-        `----------------------------------------\n` +
-        `📦 *ORDER DETAILS:*\n${orderItemsText}\n` +
-        `----------------------------------------\n` +
-        `💰 *TOTAL AMOUNT:* ₹${total}\n\n` +
-        `Please confirm my order!`;
-
-      let encodedMessage = encodeURIComponent(whatsappMessage);
-      let whatsappURL = `https://wa.me/${OWNER_WHATSAPP}?text=${encodedMessage}`;
-
-      clearCart();
-      closeCheckoutModal();
-      toggleCart();
-
-      window.open(whatsappURL, '_blank');
-    }
-
-    function filterProducts() {
-      let input = document.getElementById('searchInput').value.toLowerCase();
-      let cards = document.querySelectorAll('.card');
-
-      cards.forEach(card => {
-        let title = card.querySelector('h3').innerText.toLowerCase();
-        card.style.display = title.includes(input) ? 'flex' : 'none';
-      });
-    }
-
-    function filterCategory(category, e) {
-      let cards = document.querySelectorAll('.card');
-      let buttons = document.querySelectorAll('.cat-btn');
-
-      buttons.forEach(btn => btn.classList.remove('active'));
-      e.target.classList.add('active');
-
-      cards.forEach(card => {
-        if (category === 'all' || card.getAttribute('data-category') === category) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
-    function renderAllCardReviews() {
-      for (let productId in allReviews) {
-        let container = document.getElementById(`reviews-${productId}`);
-        if (container) {
-          let list = allReviews[productId];
-          container.innerHTML = list.map(r => `
-            <div class="review-item">
-              <div class="review-head">
-                <span>${r.name}</span>
-                <span class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
-              </div>
-              <div>${r.text}</div>
-            </div>
-          `).join('');
-        }
-      }
-    }
-
-    function submitCardReview(event, productId) {
-      event.preventDefault();
-      let form = event.target;
-      let name = form.querySelector('.rev-name').value.trim();
-      let rating = parseInt(form.querySelector('.rev-rating').value);
-      let text = form.querySelector('.rev-msg').value.trim();
-
-      if (!allReviews[productId]) {
-        allReviews[productId] = [];
-      }
-
-      allReviews[productId].unshift({ name, rating, text });
-      localStorage.setItem('mnzmCardReviews', JSON.stringify(allReviews));
-
-      renderAllCardReviews();
-      form.reset();
-      showToast('Thank you for your review!');
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
