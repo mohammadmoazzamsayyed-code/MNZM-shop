@@ -4,7 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MNZM SHOP - Premium Bottomwear</title>
-  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts Link for Aesthetic Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3">
+  <style>
+    /* Force Aesthetic Typography Update */
+    .logo {
+      font-family: 'Playfair Display', serif !important;
+      font-size: 1.8rem !important;
+      letter-spacing: 2px !important;
+      font-weight: 700 !important;
+    }
+    .nav-links a, .hero h1, .section-title, .card-body h3 {
+      font-family: 'Poppins', sans-serif !important;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif !important;
+      letter-spacing: 1px;
+    }
+  </style>
 </head>
 <body>
 
@@ -130,7 +150,7 @@
 
     <div class="product-grid" id="productGrid">
 
-      <!-- Bonker (Unisex) -->
+      <!-- 1. Bonker (Unisex) -->
       <div class="card" data-category="joggers" data-id="bonker">
         <div class="card-img-wrapper" onclick="openProductDetail('bonker')">
           <img id="card-img-bonker" loading="lazy" src="images/bonker1.png" alt="Bonker">
@@ -175,7 +195,50 @@
         </div>
       </div>
 
-      <!-- Rinkle Plazo -->
+      <!-- 2. Plain Plazo -->
+      <div class="card" data-category="plazo" data-id="plain-plazo">
+        <div class="card-img-wrapper" onclick="openProductDetail('plain-plazo')">
+          <img id="card-img-plain-plazo" loading="lazy" src="images/plain1.png" alt="Plain Plazo">
+          <span class="view-details-badge">🔍 Click for Details & Zoom</span>
+        </div>
+        <div class="card-body">
+          <h3 onclick="openProductDetail('plain-plazo')">Plain Plazo</h3>
+          <p class="price">₹150</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-plain-plazo"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">Free Size</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Plain Plazo', 150)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('plain-plazo')">View Details 🔍</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span class="star-gold">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-plain-plazo"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'plain-plazo')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Rinkle Plazo -->
       <div class="card" data-category="plazo" data-id="rinkle-plazo">
         <div class="card-img-wrapper" onclick="openProductDetail('rinkle-plazo')">
           <img id="card-img-rinkle-plazo" loading="lazy" src="images/rinkle1.png" alt="Rinkle Plazo">
@@ -183,7 +246,7 @@
         </div>
         <div class="card-body">
           <h3 onclick="openProductDetail('rinkle-plazo')">Rinkle Plazo</h3>
-          <p class="price">₹120</p>
+          <p class="price">₹150</p>
           <div class="option-group">
             <label>Tap to Select Color:</label>
             <div class="options color-options" id="colors-rinkle-plazo"></div>
@@ -194,7 +257,7 @@
               <button class="opt-btn selected" onclick="selectCardOption(this)">Free Size</button>
             </div>
           </div>
-          <button class="buy-btn" onclick="addCardToCart(this, 'Rinkle Plazo', 120)">Add to Cart 🛒</button>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Rinkle Plazo', 150)">Add to Cart 🛒</button>
           <button class="detail-btn" onclick="openProductDetail('rinkle-plazo')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -218,7 +281,95 @@
         </div>
       </div>
 
-      <!-- Printed Plazo -->
+      <!-- 4. Cotton Leggings -->
+      <div class="card" data-category="leggings" data-id="cotton-leggings">
+        <div class="card-img-wrapper" onclick="openProductDetail('cotton-leggings')">
+          <img id="card-img-cotton-leggings" loading="lazy" src="images/leggings1.png" alt="Cotton Leggings">
+          <span class="view-details-badge">🔍 Click for Details & Zoom</span>
+        </div>
+        <div class="card-body">
+          <h3 onclick="openProductDetail('cotton-leggings')">Cotton Leggings</h3>
+          <p class="price">₹200</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-cotton-leggings"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Cotton Leggings', 200)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('cotton-leggings')">View Details 🔍</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span class="star-gold">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-cotton-leggings"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'cotton-leggings')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Nylon Leggings -->
+      <div class="card" data-category="leggings" data-id="nylon-leggings">
+        <div class="card-img-wrapper" onclick="openProductDetail('nylon-leggings')">
+          <img id="card-img-nylon-leggings" loading="lazy" src="images/nylon1.png" alt="Nylon Leggings">
+          <span class="view-details-badge">🔍 Click for Details & Zoom</span>
+        </div>
+        <div class="card-body">
+          <h3 onclick="openProductDetail('nylon-leggings')">Nylon Leggings</h3>
+          <p class="price">₹150</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-nylon-leggings"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">Free Size</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Nylon Leggings', 150)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('nylon-leggings')">View Details 🔍</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span class="star-gold">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-nylon-leggings"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'nylon-leggings')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Printed Plazo (Normal) -->
       <div class="card" data-category="plazo" data-id="printed-plazo">
         <div class="card-img-wrapper" onclick="openProductDetail('printed-plazo')">
           <img id="card-img-printed-plazo" loading="lazy" src="images/printed1.png" alt="Printed Plazo">
@@ -261,81 +412,37 @@
         </div>
       </div>
 
-      <!-- Plain Plazo -->
-      <div class="card" data-category="plazo" data-id="plain-plazo">
-        <div class="card-img-wrapper" onclick="openProductDetail('plain-plazo')">
-          <img id="card-img-plain-plazo" loading="lazy" src="images/plain1.png" alt="Plain Plazo">
+      <!-- 7. Ribbon Pant -->
+      <div class="card" data-category="pants" data-id="ribbon-pant">
+        <div class="card-img-wrapper" onclick="openProductDetail('ribbon-pant')">
+          <img id="card-img-ribbon-pant" loading="lazy" src="images/ribbon1.png" alt="Ribbon Pant">
           <span class="view-details-badge">🔍 Click for Details & Zoom</span>
         </div>
         <div class="card-body">
-          <h3 onclick="openProductDetail('plain-plazo')">Plain Plazo</h3>
-          <p class="price">₹100</p>
+          <h3 onclick="openProductDetail('ribbon-pant')">Ribbon Pant</h3>
+          <p class="price">₹200</p>
           <div class="option-group">
             <label>Tap to Select Color:</label>
-            <div class="options color-options" id="colors-plain-plazo"></div>
-          </div>
-          <div class="option-group">
-            <label>Select Size:</label>
-            <div class="options size-options">
-              <button class="opt-btn selected" onclick="selectCardOption(this)">Free Size</button>
-            </div>
-          </div>
-          <button class="buy-btn" onclick="addCardToCart(this, 'Plain Plazo', 100)">Add to Cart 🛒</button>
-          <button class="detail-btn" onclick="openProductDetail('plain-plazo')">View Details 🔍</button>
-
-          <div class="card-reviews-wrapper">
-            <div class="reviews-title">
-              <span>Customer Reviews</span>
-              <span class="star-gold">★★★★★</span>
-            </div>
-            <div class="reviews-list" id="reviews-plain-plazo"></div>
-
-            <form class="direct-review-form" onsubmit="submitCardReview(event, 'plain-plazo')">
-              <input type="text" class="rev-name" placeholder="Your Name" required>
-              <select class="rev-rating" required>
-                <option value="5">★★★★★ (5/5)</option>
-                <option value="4">★★★★☆ (4/5)</option>
-                <option value="3">★★★☆☆ (3/5)</option>
-              </select>
-              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
-              <button type="submit" class="submit-rev-btn">Submit Review</button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cotton Leggings -->
-      <div class="card" data-category="leggings" data-id="cotton-leggings">
-        <div class="card-img-wrapper" onclick="openProductDetail('cotton-leggings')">
-          <img id="card-img-cotton-leggings" loading="lazy" src="images/leggings1.png" alt="Cotton Leggings">
-          <span class="view-details-badge">🔍 Click for Details & Zoom</span>
-        </div>
-        <div class="card-body">
-          <h3 onclick="openProductDetail('cotton-leggings')">Cotton Leggings</h3>
-          <p class="price">₹150</p>
-          <div class="option-group">
-            <label>Tap to Select Color:</label>
-            <div class="options color-options" id="colors-cotton-leggings"></div>
+            <div class="options color-options" id="colors-ribbon-pant"></div>
           </div>
           <div class="option-group">
             <label>Select Size:</label>
             <div class="options size-options">
               <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
               <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
-              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
             </div>
           </div>
-          <button class="buy-btn" onclick="addCardToCart(this, 'Cotton Leggings', 150)">Add to Cart 🛒</button>
-          <button class="detail-btn" onclick="openProductDetail('cotton-leggings')">View Details 🔍</button>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Ribbon Pant', 200)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('ribbon-pant')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
             <div class="reviews-title">
               <span>Customer Reviews</span>
               <span class="star-gold">★★★★★</span>
             </div>
-            <div class="reviews-list" id="reviews-cotton-leggings"></div>
+            <div class="reviews-list" id="reviews-ribbon-pant"></div>
 
-            <form class="direct-review-form" onsubmit="submitCardReview(event, 'cotton-leggings')">
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'ribbon-pant')">
               <input type="text" class="rev-name" placeholder="Your Name" required>
               <select class="rev-rating" required>
                 <option value="5">★★★★★ (5/5)</option>
@@ -349,7 +456,7 @@
         </div>
       </div>
 
-      <!-- Korean Pant -->
+      <!-- 8. Korean Pant -->
       <div class="card" data-category="pants" data-id="korean-pant">
         <div class="card-img-wrapper" onclick="openProductDetail('korean-pant')">
           <img id="card-img-korean-pant" loading="lazy" src="images/korean1.png" alt="Korean Pant">
@@ -357,7 +464,7 @@
         </div>
         <div class="card-body">
           <h3 onclick="openProductDetail('korean-pant')">Korean Pant</h3>
-          <p class="price">₹280</p>
+          <p class="price">₹200</p>
           <div class="option-group">
             <label>Tap to Select Color:</label>
             <div class="options color-options" id="colors-korean-pant"></div>
@@ -370,7 +477,7 @@
               <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
             </div>
           </div>
-          <button class="buy-btn" onclick="addCardToCart(this, 'Korean Pant', 280)">Add to Cart 🛒</button>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Korean Pant', 200)">Add to Cart 🛒</button>
           <button class="detail-btn" onclick="openProductDetail('korean-pant')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -381,6 +488,92 @@
             <div class="reviews-list" id="reviews-korean-pant"></div>
 
             <form class="direct-review-form" onsubmit="submitCardReview(event, 'korean-pant')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Cotton Plain Plazo -->
+      <div class="card" data-category="plazo" data-id="cotton-plain-plazo">
+        <div class="card-img-wrapper" onclick="openProductDetail('cotton-plain-plazo')">
+          <img id="card-img-cotton-plain-plazo" loading="lazy" src="images/cotton-plain1.png" alt="Cotton Plain Plazo">
+          <span class="view-details-badge">🔍 Click for Details & Zoom</span>
+        </div>
+        <div class="card-body">
+          <h3 onclick="openProductDetail('cotton-plain-plazo')">Cotton Plain Plazo</h3>
+          <p class="price">₹150</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-cotton-plain-plazo"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">Free Size</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Cotton Plain Plazo', 150)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('cotton-plain-plazo')">View Details 🔍</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span class="star-gold">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-cotton-plain-plazo"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'cotton-plain-plazo')">
+              <input type="text" class="rev-name" placeholder="Your Name" required>
+              <select class="rev-rating" required>
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+              </select>
+              <textarea class="rev-msg" rows="2" placeholder="Write your view..." required></textarea>
+              <button type="submit" class="submit-rev-btn">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. Cotton Printed Plazo -->
+      <div class="card" data-category="plazo" data-id="cotton-printed-plazo">
+        <div class="card-img-wrapper" onclick="openProductDetail('cotton-printed-plazo')">
+          <img id="card-img-cotton-printed-plazo" loading="lazy" src="images/cotton-printed1.png" alt="Cotton Printed Plazo">
+          <span class="view-details-badge">🔍 Click for Details & Zoom</span>
+        </div>
+        <div class="card-body">
+          <h3 onclick="openProductDetail('cotton-printed-plazo')">Cotton Printed Plazo</h3>
+          <p class="price">₹150</p>
+          <div class="option-group">
+            <label>Tap to Select Color:</label>
+            <div class="options color-options" id="colors-cotton-printed-plazo"></div>
+          </div>
+          <div class="option-group">
+            <label>Select Size:</label>
+            <div class="options size-options">
+              <button class="opt-btn selected" onclick="selectCardOption(this)">Free Size</button>
+            </div>
+          </div>
+          <button class="buy-btn" onclick="addCardToCart(this, 'Cotton Printed Plazo', 150)">Add to Cart 🛒</button>
+          <button class="detail-btn" onclick="openProductDetail('cotton-printed-plazo')">View Details 🔍</button>
+
+          <div class="card-reviews-wrapper">
+            <div class="reviews-title">
+              <span>Customer Reviews</span>
+              <span class="star-gold">★★★★★</span>
+            </div>
+            <div class="reviews-list" id="reviews-cotton-printed-plazo"></div>
+
+            <form class="direct-review-form" onsubmit="submitCardReview(event, 'cotton-printed-plazo')">
               <input type="text" class="rev-name" placeholder="Your Name" required>
               <select class="rev-rating" required>
                 <option value="5">★★★★★ (5/5)</option>
