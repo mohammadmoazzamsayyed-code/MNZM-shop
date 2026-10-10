@@ -37,6 +37,24 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.15);
 }
 
+/* Brand Logo Image Styling */
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.brand-logo {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.05);
+}
+
 .logo {
   font-size: 1.6rem;
   font-weight: 800;
