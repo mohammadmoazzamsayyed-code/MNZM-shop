@@ -17,50 +17,86 @@ const productDetailsDatabase = {
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Olive Green'],
     sizes: ['XL', 'XXL', '3XL']
   },
-  'rinkle-plazo': {
-    title: 'Rinkle Plazo',
-    price: 120,
-    description: 'Trendy wrinkled fabric plazo with maximum stretchability and extreme comfort for all-day daily wear.',
-    defaultImages: ['images/rinkle1.png', 'images/rinkle2.png'],
+  'plain-plazo': {
+    title: 'Plain Plazo',
+    price: 150,
+    description: 'Minimalist solid colored flared plain plazos crafted for all-day daily wear.',
+    defaultImages: ['images/plain1.png'],
     colorImages: {},
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['Free Size']
   },
-  'printed-plazo': {
-    title: 'Printed Plazo',
+  'rinkle-plazo': {
+    title: 'Rinkle Plazo',
     price: 150,
-    description: 'Vibrant floral and geometric prints crafted from soft rayon material for a graceful casual style.',
-    defaultImages: ['images/printed1.png'],
-    colorImages: {},
-    colors: ['Multi-Color', 'Black Print', 'Navy Print'],
-    sizes: ['Free Size']
-  },
-  'plain-plazo': {
-    title: 'Plain Plazo',
-    price: 100,
-    description: 'Minimalist solid colored flared plazos crafted from breathable fine quality cotton.',
-    defaultImages: ['images/plain1.png'],
+    description: 'Trendy wrinkled fabric plazo with maximum stretchability and extreme comfort.',
+    defaultImages: ['images/rinkle1.png', 'images/rinkle2.png'],
     colorImages: {},
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['Free Size']
   },
   'cotton-leggings': {
     title: 'Cotton Leggings',
-    price: 150,
+    price: 200,
     description: '4-way stretch 100% pure combed cotton leggings with ankle length comfortable fit.',
     defaultImages: ['images/leggings1.png'],
     colorImages: {},
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['XL', 'XXL', '3XL']
   },
+  'nylon-leggings': {
+    title: 'Nylon Leggings',
+    price: 150,
+    description: 'Smooth stretchable high-grade nylon leggings for everyday comfort.',
+    defaultImages: ['images/nylon1.png'],
+    colorImages: {},
+    colors: ['Black', 'Dark Grey', 'Navy Blue'],
+    sizes: ['Free Size']
+  },
+  'printed-plazo': {
+    title: 'Printed Plazo',
+    price: 150,
+    description: 'Vibrant floral and geometric prints crafted from soft material for casual style.',
+    defaultImages: ['images/printed1.png'],
+    colorImages: {},
+    colors: ['Multi-Color', 'Black Print', 'Navy Print'],
+    sizes: ['Free Size']
+  },
+  'ribbon-pant': {
+    title: 'Ribbon Pant',
+    price: 200,
+    description: 'Stylish ribbon side-detailed modern trousers with elastic waist fit.',
+    defaultImages: ['images/ribbon1.png'],
+    colorImages: {},
+    colors: ['Black', 'Dark Grey', 'Beige'],
+    sizes: ['XL', 'XXL']
+  },
   'korean-pant': {
     title: 'Korean Pant',
-    price: 280,
+    price: 200,
     description: 'Modern loose baggy aesthetic Korean trousers with side elastic and double stitching.',
     defaultImages: ['images/korean1.png'],
     colorImages: {},
     colors: ['Dark Grey', 'Black', 'Beige', 'Olive Green'],
     sizes: ['XL', 'XXL', '3XL']
+  },
+  'cotton-plain-plazo': {
+    title: 'Cotton Plain Plazo',
+    price: 150,
+    description: 'Minimalist solid colored flared plain cotton plazos crafted from breathable fine quality cotton.',
+    defaultImages: ['images/cotton-plain1.png'],
+    colorImages: {},
+    colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
+    sizes: ['Free Size']
+  },
+  'cotton-printed-plazo': {
+    title: 'Cotton Printed Plazo',
+    price: 150,
+    description: 'Vibrant printed cotton plazo crafted from soft breathable pure cotton fabric.',
+    defaultImages: ['images/cotton-printed1.png'],
+    colorImages: {},
+    colors: ['Multi-Color', 'Black Print', 'Navy Print'],
+    sizes: ['Free Size']
   }
 };
 
