@@ -7,12 +7,12 @@ const productDetailsDatabase = {
     title: 'Bonker (Men & Women)',
     price: 250,
     description: 'Premium heavy cotton blend unisex bonker pants with elastic waistband, drawstring, side pockets, and durable soft texture.',
-    defaultImages: ['images/bonker1.png', 'images/bonker2.png'],
+    defaultImages: ['images/bonker1.png'],
     colorImages: {
-      'Dark Grey': ['images/bonker1.png', 'images/bonker2.png'],
-      'Black': ['images/bonker1.png'],
-      'Navy Blue': ['images/bonker2.png'],
-      'Olive Green': ['images/bonker1.png']
+      'Dark Grey': ['images/bonker1.png'],
+      'Black': ['images/bonker2.png'],
+      'Navy Blue': ['images/bonker3.png'],
+      'Olive Green': ['images/bonker4.png']
     },
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Olive Green'],
     sizes: ['XL', 'XXL', '3XL']
@@ -22,7 +22,12 @@ const productDetailsDatabase = {
     price: 150,
     description: 'Minimalist solid colored flared plain plazos crafted for all-day daily wear.',
     defaultImages: ['images/plain1.png'],
-    colorImages: {},
+    colorImages: {
+      'Dark Grey': ['images/plain1.png'],
+      'Black': ['images/plain2.png'],
+      'Navy Blue': ['images/plain3.png'],
+      'Maroon': ['images/plain4.png']
+    },
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['Free Size']
   },
@@ -30,8 +35,13 @@ const productDetailsDatabase = {
     title: 'Rinkle Plazo',
     price: 150,
     description: 'Trendy wrinkled fabric plazo with maximum stretchability and extreme comfort.',
-    defaultImages: ['images/rinkle1.png', 'images/rinkle2.png'],
-    colorImages: {},
+    defaultImages: ['images/rinkle1.png'],
+    colorImages: {
+      'Dark Grey': ['images/rinkle1.png'],
+      'Black': ['images/rinkle2.png'],
+      'Navy Blue': ['images/rinkle3.png'],
+      'Maroon': ['images/rinkle4.png']
+    },
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['Free Size']
   },
@@ -40,7 +50,12 @@ const productDetailsDatabase = {
     price: 200,
     description: '4-way stretch 100% pure combed cotton leggings with ankle length comfortable fit.',
     defaultImages: ['images/leggings1.png'],
-    colorImages: {},
+    colorImages: {
+      'Dark Grey': ['images/leggings1.png'],
+      'Black': ['images/leggings2.png'],
+      'Navy Blue': ['images/leggings3.png'],
+      'Maroon': ['images/leggings4.png']
+    },
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['XL', 'XXL', '3XL']
   },
@@ -49,9 +64,13 @@ const productDetailsDatabase = {
     price: 150,
     description: 'Smooth stretchable high-grade nylon leggings for everyday comfort.',
     defaultImages: ['images/nylon1.png'],
-    colorImages: {},
+    colorImages: {
+      'Black': ['images/nylon1.png'],
+      'Dark Grey': ['images/nylon2.png'],
+      'Navy Blue': ['images/nylon3.png']
+    },
     colors: ['Black', 'Dark Grey', 'Navy Blue'],
-    sizes: ['Free Size']
+    sizes: ['XL', 'XXL', '3XL']
   },
   'printed-plazo': {
     title: 'Printed Plazo',
@@ -59,7 +78,7 @@ const productDetailsDatabase = {
     description: 'Vibrant floral and geometric prints crafted from soft material for casual style.',
     defaultImages: ['images/printed1.png'],
     colorImages: {},
-    colors: ['Multi-Color', 'Black Print', 'Navy Print'],
+    colors: [],
     sizes: ['Free Size']
   },
   'ribbon-pant': {
@@ -67,7 +86,11 @@ const productDetailsDatabase = {
     price: 200,
     description: 'Stylish ribbon side-detailed modern trousers with elastic waist fit.',
     defaultImages: ['images/ribbon1.png'],
-    colorImages: {},
+    colorImages: {
+      'Black': ['images/ribbon1.png'],
+      'Dark Grey': ['images/ribbon2.png'],
+      'Beige': ['images/ribbon3.png']
+    },
     colors: ['Black', 'Dark Grey', 'Beige'],
     sizes: ['XL', 'XXL']
   },
@@ -76,7 +99,12 @@ const productDetailsDatabase = {
     price: 200,
     description: 'Modern loose baggy aesthetic Korean trousers with side elastic and double stitching.',
     defaultImages: ['images/korean1.png'],
-    colorImages: {},
+    colorImages: {
+      'Dark Grey': ['images/korean1.png'],
+      'Black': ['images/korean2.png'],
+      'Beige': ['images/korean3.png'],
+      'Olive Green': ['images/korean4.png']
+    },
     colors: ['Dark Grey', 'Black', 'Beige', 'Olive Green'],
     sizes: ['XL', 'XXL', '3XL']
   },
@@ -85,7 +113,12 @@ const productDetailsDatabase = {
     price: 150,
     description: 'Minimalist solid colored flared plain cotton plazos crafted from breathable fine quality cotton.',
     defaultImages: ['images/cotton-plain1.png'],
-    colorImages: {},
+    colorImages: {
+      'Dark Grey': ['images/cotton-plain1.png'],
+      'Black': ['images/cotton-plain2.png'],
+      'Navy Blue': ['images/cotton-plain3.png'],
+      'Maroon': ['images/cotton-plain4.png']
+    },
     colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
     sizes: ['Free Size']
   },
@@ -95,7 +128,7 @@ const productDetailsDatabase = {
     description: 'Vibrant printed cotton plazo crafted from soft breathable pure cotton fabric.',
     defaultImages: ['images/cotton-printed1.png'],
     colorImages: {},
-    colors: ['Multi-Color', 'Black Print', 'Navy Print'],
+    colors: [],
     sizes: ['Free Size']
   }
 };
@@ -119,11 +152,22 @@ window.onload = function() {
   setupZoomFeature();
 };
 
+function getProductImages(prod, colorName) {
+  if (prod.colorImages && prod.colorImages[colorName] && prod.colorImages[colorName].length > 0) {
+    return prod.colorImages[colorName];
+  }
+  let idx = prod.colors.indexOf(colorName);
+  if (idx === -1) idx = 0;
+  let baseImg = prod.defaultImages[0];
+  let newImg = baseImg.replace(/\d+(\.png|\.jpg|\.jpeg)$/i, (match, ext) => (idx + 1) + ext);
+  return [newImg];
+}
+
 function renderCardColors() {
   Object.keys(productDetailsDatabase).forEach(productId => {
     let prod = productDetailsDatabase[productId];
     let el = document.getElementById(`colors-${productId}`);
-    if (el) {
+    if (el && prod.colors && prod.colors.length > 0) {
       el.innerHTML = prod.colors.map((color, idx) => 
         `<button class="opt-btn ${idx === 0 ? 'selected' : ''}" onclick="selectCardColor('${productId}', '${color}', this)">${color}</button>`
       ).join('');
@@ -138,9 +182,7 @@ function selectCardColor(productId, colorName, btn) {
 
   let imgEl = document.getElementById(`card-img-${productId}`);
   if (imgEl) {
-    let images = (prod.colorImages && prod.colorImages[colorName] && prod.colorImages[colorName].length > 0) 
-                 ? prod.colorImages[colorName] 
-                 : prod.defaultImages;
+    let images = getProductImages(prod, colorName);
     if (images && images.length > 0) {
       imgEl.src = images[0];
     }
@@ -156,11 +198,24 @@ function openProductDetail(productId) {
   document.getElementById('detailPrice').innerText = `₹${prod.price}`;
   document.getElementById('detailDescription').innerText = prod.description;
 
+  const colorGroupEl = document.getElementById('detailColorGroup');
   const colorContainer = document.getElementById('detailColors');
-  if (colorContainer) {
-    colorContainer.innerHTML = prod.colors.map((c, idx) => `
-      <button class="opt-btn ${idx === 0 ? 'selected' : ''}" onclick="selectModalColor('${c}', this)">${c}</button>
-    `).join('');
+
+  if (prod.colors && prod.colors.length > 0) {
+    if (colorGroupEl) colorGroupEl.style.display = 'block';
+    let cardColorEl = document.querySelector(`#colors-${productId} .opt-btn.selected`);
+    let preSelectedColor = cardColorEl ? cardColorEl.innerText : prod.colors[0];
+
+    if (colorContainer) {
+      colorContainer.innerHTML = prod.colors.map(c => `
+        <button class="opt-btn ${c === preSelectedColor ? 'selected' : ''}" onclick="selectModalColor('${c}', this)">${c}</button>
+      `).join('');
+    }
+    let initialImages = getProductImages(prod, preSelectedColor);
+    updateModalImages(initialImages);
+  } else {
+    if (colorGroupEl) colorGroupEl.style.display = 'none';
+    updateModalImages(prod.defaultImages);
   }
 
   const sizeContainer = document.getElementById('detailSizes');
@@ -170,12 +225,10 @@ function openProductDetail(productId) {
     `).join('');
   }
 
-  updateModalImages(prod, prod.colors[0]);
-
   const addBtn = document.getElementById('detailAddToCartBtn');
   if (addBtn) {
     addBtn.onclick = function() {
-      let selectedColor = colorContainer?.querySelector('.opt-btn.selected')?.innerText || prod.colors[0];
+      let selectedColor = (prod.colors && prod.colors.length > 0) ? (colorContainer?.querySelector('.opt-btn.selected')?.innerText || prod.colors[0]) : 'Default';
       let selectedSize = sizeContainer?.querySelector('.opt-btn.selected')?.innerText || prod.sizes[0];
       addToCartDirect(prod.title, prod.price, selectedColor, selectedSize);
       closeDetailModal();
@@ -189,15 +242,12 @@ function selectModalColor(colorName, btnEl) {
   selectCardOption(btnEl);
   const prod = productDetailsDatabase[activeModalProductId];
   if (prod) {
-    updateModalImages(prod, colorName);
+    let images = getProductImages(prod, colorName);
+    updateModalImages(images);
   }
 }
 
-function updateModalImages(prod, colorName) {
-  let images = (prod.colorImages && prod.colorImages[colorName] && prod.colorImages[colorName].length > 0) 
-               ? prod.colorImages[colorName] 
-               : prod.defaultImages;
-
+function updateModalImages(images) {
   if (!images || images.length === 0) return;
 
   const mainImg = document.getElementById('detailMainImg');
@@ -255,7 +305,8 @@ function selectCardOption(btn) {
 
 function addCardToCart(btn, title, price) {
   let card = btn.closest('.card');
-  let selectedColor = card.querySelector('.color-options .opt-btn.selected')?.innerText || 'Default';
+  let colorBtn = card.querySelector('.color-options .opt-btn.selected');
+  let selectedColor = colorBtn ? colorBtn.innerText : 'Default';
   let selectedSize = card.querySelector('.size-options .opt-btn.selected')?.innerText || 'Free Size';
 
   addToCartDirect(title, price, selectedColor, selectedSize);
