@@ -122,7 +122,7 @@
         <p id="detailPrice">₹0</p>
         <p id="detailDescription">High-quality fabric designed for ultimate comfort and durability.</p>
 
-        <div class="option-group">
+        <div class="option-group" id="detailColorGroup">
           <label>Select Color:</label>
           <div class="options color-options" id="detailColors"></div>
         </div>
@@ -352,7 +352,9 @@
           <div class="option-group">
             <label>Select Size:</label>
             <div class="options size-options">
-              <button class="opt-btn selected" onclick="selectCardOption(this)">Free Size</button>
+              <button class="opt-btn selected" onclick="selectCardOption(this)">XL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">XXL</button>
+              <button class="opt-btn" onclick="selectCardOption(this)">3XL</button>
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Nylon Leggings', 150)">Add to Cart 🛒</button>
@@ -388,10 +390,6 @@
         <div class="card-body">
           <h3 onclick="openProductDetail('printed-plazo')">Printed Plazo</h3>
           <p class="price">₹150</p>
-          <div class="option-group">
-            <label>Tap to Select Color:</label>
-            <div class="options color-options" id="colors-printed-plazo"></div>
-          </div>
           <div class="option-group">
             <label>Select Size:</label>
             <div class="options size-options">
@@ -563,10 +561,6 @@
         <div class="card-body">
           <h3 onclick="openProductDetail('cotton-printed-plazo')">Cotton Printed Plazo</h3>
           <p class="price">₹150</p>
-          <div class="option-group">
-            <label>Tap to Select Color:</label>
-            <div class="options color-options" id="colors-cotton-printed-plazo"></div>
-          </div>
           <div class="option-group">
             <label>Select Size:</label>
             <div class="options size-options">
