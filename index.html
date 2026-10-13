@@ -4,12 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MNZM SHOP - Premium Bottomwear</title>
-  <!-- Google Fonts Link for Aesthetic Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
   <style>
+    .announcement-bar {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: #f8fafc;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
     .logo-link {
       display: flex;
       align-items: center;
@@ -48,9 +56,57 @@
     .whatsapp-buy-btn:hover {
       opacity: 0.9;
     }
+    .faq-section {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 0.8rem;
+      overflow: hidden;
+    }
+    .faq-question {
+      padding: 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #1e293b;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+    }
+    .faq-answer {
+      padding: 1rem;
+      font-size: 0.88rem;
+      color: #475569;
+      display: none;
+      border-top: 1px solid #e2e8f0;
+      line-height: 1.5;
+    }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: #16a34a;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #dcfce7;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 6px;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Top Announcement Urgency Bar -->
+  <div class="announcement-bar">
+    🔥 <strong>Launch Offer:</strong> Premium Bottomwear Starting @ ₹150 | Fast Direct Delivery Across Mumbai! 🚀
+  </div>
 
   <!-- Toast Notification -->
   <div id="toast" class="toast">Item added to cart!</div>
@@ -64,6 +120,7 @@
       <li><a href="#home">Home</a></li>
       <li><a href="#products">Shop</a></li>
       <li><a href="javascript:void(0)" onclick="openCancelModal()" style="color: #f87171;">Cancel Order 🚫</a></li>
+      <li><a href="#faq">FAQ</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="javascript:void(0)" class="cart-btn" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</a></li>
     </ul>
@@ -119,7 +176,7 @@
           </select>
         </div>
 
-        <!-- Static QR Display Container (Initially Hidden) -->
+        <!-- Static QR Display Container -->
         <div id="qrContainer" style="display: none; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 1rem; text-align: center; margin-bottom: 1.2rem;">
           <p style="font-size: 0.9rem; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem;">
             📲 Scan & Pay via GPay / PhonePe / Paytm / Any UPI
@@ -171,17 +228,60 @@
     </div>
   </div>
 
+  <!-- Size Chart Guide Modal -->
+  <div id="sizeChartModal" class="modal" style="display: none; align-items: center; justify-content: center; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+    <div class="modal-content" style="background: #fff; padding: 2rem; border-radius: 12px; max-width: 500px; width: 90%; position: relative;">
+      <span class="close-modal" onclick="closeSizeChartModal()" style="position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer;">&times;</span>
+      <h2 style="margin-top: 0;">MNZM Size Guide 📏</h2>
+      <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">
+        Check measurements below for the perfect fit before placing your order.
+      </p>
+
+      <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+        <thead>
+          <tr style="background: #f1f5f9; border-bottom: 2px solid #cbd5e1;">
+            <th style="padding: 0.6rem;">Size Tag</th>
+            <th style="padding: 0.6rem;">Waist (Inches)</th>
+            <th style="padding: 0.6rem;">Length (Inches)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 0.6rem; font-weight: 600;">Free Size</td>
+            <td style="padding: 0.6rem;">28" – 36" (Elastic)</td>
+            <td style="padding: 0.6rem;">38" – 39"</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 0.6rem; font-weight: 600;">XL</td>
+            <td style="padding: 0.6rem;">30" – 34"</td>
+            <td style="padding: 0.6rem;">39"</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 0.6rem; font-weight: 600;">XXL</td>
+            <td style="padding: 0.6rem;">34" – 38"</td>
+            <td style="padding: 0.6rem;">40"</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.6rem; font-weight: 600;">3XL</td>
+            <td style="padding: 0.6rem;">38" – 42"</td>
+            <td style="padding: 0.6rem;">40"</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button class="buy-btn" style="margin-top: 1.2rem; width: 100%; background: #2563eb; color: #fff; padding: 0.7rem; border: none; border-radius: 8px; cursor: pointer;" onclick="closeSizeChartModal()">Got It 👍</button>
+    </div>
+  </div>
+
   <!-- Product Details Preview Modal -->
   <div id="productDetailModal" class="modal">
     <div class="modal-content product-detail-modal-content">
       <span class="close-modal" onclick="closeDetailModal()">&times;</span>
       
       <div class="gallery-container">
-        <!-- Main Image -->
         <div class="zoom-box" id="zoomContainer">
           <img id="detailMainImg" class="main-image-display" src="" alt="Product Detail">
         </div>
-        <!-- Thumbnails -->
         <div class="thumbnails-row" id="detailThumbnails"></div>
       </div>
 
@@ -196,7 +296,6 @@
         </div>
 
         <div class="option-group">
-          <label>Select Size:</label>
           <div class="options size-options" id="detailSizes"></div>
         </div>
 
@@ -214,6 +313,32 @@
     </div>
   </section>
 
+  <!-- Trust Badges Section -->
+  <section class="trust-badges-container" style="background: #ffffff; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 1.5rem 1rem;">
+    <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 1rem; text-align: center;">
+      <div style="flex: 1; min-width: 140px;">
+        <span style="font-size: 1.6rem;">🚚</span>
+        <h4 style="margin: 0.3rem 0 0.1rem; font-size: 0.9rem; font-weight: 600; color: #1e293b;">Fast Delivery</h4>
+        <p style="margin: 0; font-size: 0.75rem; color: #64748b;">Direct dispatch across Mumbai</p>
+      </div>
+      <div style="flex: 1; min-width: 140px;">
+        <span style="font-size: 1.6rem;">🔁</span>
+        <h4 style="margin: 0.3rem 0 0.1rem; font-size: 0.9rem; font-weight: 600; color: #1e293b;">2-Hour Easy Cancel</h4>
+        <p style="margin: 0; font-size: 0.75rem; color: #64748b;">Instant WhatsApp confirmation</p>
+      </div>
+      <div style="flex: 1; min-width: 140px;">
+        <span style="font-size: 1.6rem;">🧵</span>
+        <h4 style="margin: 0.3rem 0 0.1rem; font-size: 0.9rem; font-weight: 600; color: #1e293b;">100% Quality Fabric</h4>
+        <p style="margin: 0; font-size: 0.75rem; color: #64748b;">Breathable, comfortable cotton</p>
+      </div>
+      <div style="flex: 1; min-width: 140px;">
+        <span style="font-size: 1.6rem;">🔒</span>
+        <h4 style="margin: 0.3rem 0 0.1rem; font-size: 0.9rem; font-weight: 600; color: #1e293b;">Safe UPI & COD</h4>
+        <p style="margin: 0; font-size: 0.75rem; color: #64748b;">Verified payment channels</p>
+      </div>
+    </div>
+  </section>
+
   <!-- Main Store Section -->
   <main id="products">
     <h2 class="section-title">Our Collection</h2>
@@ -228,7 +353,7 @@
 
     <div class="product-grid" id="productGrid">
 
-      <!-- 1. Bonker (Unisex) -->
+      <!-- 1. Bonker -->
       <div class="card" data-category="joggers" data-id="bonker">
         <div class="card-img-wrapper" onclick="openProductDetail('bonker')">
           <img id="card-img-bonker" loading="lazy" src="images/bonker1.png" alt="Bonker">
@@ -454,7 +579,7 @@
         </div>
       </div>
 
-      <!-- 6. Printed Plazo (Normal) -->
+      <!-- 6. Printed Plazo -->
       <div class="card" data-category="plazo" data-id="printed-plazo">
         <div class="card-img-wrapper" onclick="openProductDetail('printed-plazo')">
           <img id="card-img-printed-plazo" loading="lazy" src="images/printed1.png" alt="Printed Plazo">
@@ -671,6 +796,51 @@
 
     </div>
   </main>
+
+  <!-- FAQ Accordion Section (Pure English) -->
+  <section class="faq-section" id="faq">
+    <h2 class="section-title" style="margin-bottom: 1.5rem;">Frequently Asked Questions (FAQ) ❓</h2>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>1. What is the fabric quality and material used?</span>
+        <span>➕</span>
+      </div>
+      <div class="faq-answer">
+        All our plazos, leggings, and bottomwear are crafted from 100% pure premium cotton and breathable 4-way stretch fabric. Designed for all-day maximum comfort and long-lasting durability.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>2. How long does delivery take?</span>
+        <span>➕</span>
+      </div>
+      <div class="faq-answer">
+        We offer **Same-Day / 24-Hour Dispatch** for local orders across Sakinaka and surrounding Mumbai areas. Orders to other regions in Mumbai are delivered within 1–2 business days.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>3. Is Cash on Delivery (COD) available?</span>
+        <span>➕</span>
+      </div>
+      <div class="faq-answer">
+        Yes! We support both Cash on Delivery (COD) and Online UPI Payments (GPay, PhonePe, Paytm, BHIM) for a seamless shopping experience.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>4. What is your Order Cancellation policy?</span>
+        <span>➕</span>
+      </div>
+      <div class="faq-answer">
+        You can easily cancel or modify your order within **2 hours** of placing it by clicking the "Cancel Order 🚫" link on our website or contacting us directly on WhatsApp.
+      </div>
+    </div>
+  </section>
 
   <footer id="contact">
     <h3>Contact Us</h3>
