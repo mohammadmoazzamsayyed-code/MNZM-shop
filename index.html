@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=4">
   <style>
-    /* Brand Logo Navbar Styling */
     .logo-link {
       display: flex;
       align-items: center;
@@ -32,6 +31,23 @@
       font-family: 'Playfair Display', serif !important;
       letter-spacing: 1px;
     }
+    .whatsapp-buy-btn {
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: white;
+      margin-top: 6px;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(37,211,102,0.3);
+      transition: opacity 0.2s ease;
+    }
+    .whatsapp-buy-btn:hover {
+      opacity: 0.9;
+    }
   </style>
 </head>
 <body>
@@ -47,6 +63,7 @@
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#products">Shop</a></li>
+      <li><a href="javascript:void(0)" onclick="openCancelModal()" style="color: #f87171;">Cancel Order 🚫</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="javascript:void(0)" class="cart-btn" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</a></li>
     </ul>
@@ -75,6 +92,9 @@
       <span class="close-modal" onclick="closeCheckoutModal()">&times;</span>
       <form class="checkout-form" onsubmit="handleOrderSubmission(event)">
         <h2>Customer Delivery Details</h2>
+        <div style="background: #eff6ff; padding: 0.8rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #2563eb; font-size: 0.85rem;">
+          ℹ️ <strong>Cancellation Window:</strong> You can cancel or modify your order within <strong>2 hours</strong> of placing it.
+        </div>
         <div class="form-group">
           <label>Full Name *</label>
           <input type="text" id="custName" required placeholder="Enter your full name">
@@ -92,13 +112,61 @@
           <input type="text" id="custPincode" required placeholder="6-digit Pincode">
         </div>
         <div class="form-group">
-          <label>Payment Method</label>
-          <select id="custPayment">
+          <label>Payment Method *</label>
+          <select id="custPayment" onchange="toggleQROption(this.value)" required>
             <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
-            <option value="UPI / Online Payment">UPI / Online Payment</option>
+            <option value="UPI / Online Payment">UPI / Online Payment (Prepaid)</option>
           </select>
         </div>
+
+        <!-- Static QR Display Container (Initially Hidden) -->
+        <div id="qrContainer" style="display: none; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 1rem; text-align: center; margin-bottom: 1.2rem;">
+          <p style="font-size: 0.9rem; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem;">
+            📲 Scan & Pay via GPay / PhonePe / Paytm / Any UPI
+          </p>
+          <img src="images/qr-code.png" alt="MNZM UPI QR Code" style="max-width: 200px; width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 0.5rem 0;">
+          <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">
+            ⚠️ Please attach the payment screenshot in the WhatsApp chat after completing the transaction.
+          </p>
+        </div>
+
         <button type="submit" class="submit-order-btn">Place Order via WhatsApp 💬</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cancel Order Modal -->
+  <div id="cancelModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeCancelModal()">&times;</span>
+      <form class="checkout-form" onsubmit="handleCancelSubmission(event)">
+        <h2>Cancel Order Request 🚫</h2>
+        <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">
+          Note: Cancellation is only allowed within <strong>2 hours</strong> of placing your order.
+        </p>
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="cancelName" required placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label>Phone / WhatsApp Number *</label>
+          <input type="tel" id="cancelPhone" required placeholder="Enter 10-digit mobile number">
+        </div>
+        <div class="form-group">
+          <label>Reason for Cancellation *</label>
+          <select id="cancelReason" required>
+            <option value="Ordered by mistake">Ordered by mistake</option>
+            <option value="Changed my mind">Changed my mind</option>
+            <option value="Delivery time too long">Delivery time too long</option>
+            <option value="Want to change size/color">Want to change size/color</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Additional Details (Optional)</label>
+          <textarea id="cancelNotes" rows="2" placeholder="Any specific reason..."></textarea>
+        </div>
+        <button type="submit" class="clear-btn" style="margin-top: 1rem; width: 100%;">Submit Cancellation Request 💬</button>
       </form>
     </div>
   </div>
@@ -182,6 +250,7 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Bonker (Men & Women)', 250)">Add to Cart 🛒</button>
+          <button class="whatsapp-buy-btn" onclick="buyCardViaWhatsApp(this, 'Bonker (Men & Women)', 250)">Order on WhatsApp 💬</button>
           <button class="detail-btn" onclick="openProductDetail('bonker')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -225,6 +294,7 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Plain Plazo', 150)">Add to Cart 🛒</button>
+          <button class="whatsapp-buy-btn" onclick="buyCardViaWhatsApp(this, 'Plain Plazo', 150)">Order on WhatsApp 💬</button>
           <button class="detail-btn" onclick="openProductDetail('plain-plazo')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -268,6 +338,7 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Rinkle Plazo', 150)">Add to Cart 🛒</button>
+          <button class="whatsapp-buy-btn" onclick="buyCardViaWhatsApp(this, 'Rinkle Plazo', 150)">Order on WhatsApp 💬</button>
           <button class="detail-btn" onclick="openProductDetail('rinkle-plazo')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -313,6 +384,7 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Cotton Leggings', 200)">Add to Cart 🛒</button>
+          <button class="whatsapp-buy-btn" onclick="buyCardViaWhatsApp(this, 'Cotton Leggings', 200)">Order on WhatsApp 💬</button>
           <button class="detail-btn" onclick="openProductDetail('cotton-leggings')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -358,6 +430,7 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Nylon Leggings', 150)">Add to Cart 🛒</button>
+          <button class="whatsapp-buy-btn" onclick="buyCardViaWhatsApp(this, 'Nylon Leggings', 150)">Order on WhatsApp 💬</button>
           <button class="detail-btn" onclick="openProductDetail('nylon-leggings')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -397,6 +470,7 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Printed Plazo', 150)">Add to Cart 🛒</button>
+          <button class="whatsapp-buy-btn" onclick="buyCardViaWhatsApp(this, 'Printed Plazo', 150)">Order on WhatsApp 💬</button>
           <button class="detail-btn" onclick="openProductDetail('printed-plazo')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -441,6 +515,7 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Ribbon Pant', 200)">Add to Cart 🛒</button>
+          <button class="whatsapp-buy-btn" onclick="buyCardViaWhatsApp(this, 'Ribbon Pant', 200)">Order on WhatsApp 💬</button>
           <button class="detail-btn" onclick="openProductDetail('ribbon-pant')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -486,6 +561,7 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Korean Pant', 200)">Add to Cart 🛒</button>
+          <button class="whatsapp-buy-btn" onclick="buyCardViaWhatsApp(this, 'Korean Pant', 200)">Order on WhatsApp 💬</button>
           <button class="detail-btn" onclick="openProductDetail('korean-pant')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -529,6 +605,7 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Cotton Plain Plazo', 150)">Add to Cart 🛒</button>
+          <button class="whatsapp-buy-btn" onclick="buyCardViaWhatsApp(this, 'Cotton Plain Plazo', 150)">Order on WhatsApp 💬</button>
           <button class="detail-btn" onclick="openProductDetail('cotton-plain-plazo')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
@@ -568,6 +645,7 @@
             </div>
           </div>
           <button class="buy-btn" onclick="addCardToCart(this, 'Cotton Printed Plazo', 150)">Add to Cart 🛒</button>
+          <button class="whatsapp-buy-btn" onclick="buyCardViaWhatsApp(this, 'Cotton Printed Plazo', 150)">Order on WhatsApp 💬</button>
           <button class="detail-btn" onclick="openProductDetail('cotton-printed-plazo')">View Details 🔍</button>
 
           <div class="card-reviews-wrapper">
