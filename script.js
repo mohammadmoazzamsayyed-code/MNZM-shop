@@ -325,6 +325,56 @@ function addToCartDirect(title, price, color, size) {
   showToast(`${title} added to cart!`);
 }
 
+function buyCardViaWhatsApp(btn, title, price) {
+  let card = btn.closest('.card');
+  let colorBtn = card.querySelector('.color-options .opt-btn.selected');
+  let selectedColor = colorBtn ? colorBtn.innerText : 'Default';
+  let selectedSize = card.querySelector('.size-options .opt-btn.selected')?.innerText || 'Free Size';
+
+  let message = `🛍️ *DIRECT ORDER - MNZM SHOP*\n\n` +
+                `• Product: *${title}*\n` +
+                `• Color: ${selectedColor}\n` +
+                `• Size: ${selectedSize}\n` +
+                `• Price: ₹${price}\n\n` +
+                `I want to buy this item. Please confirm my order!`;
+
+  let encodedMsg = encodeURIComponent(message);
+  let whatsappUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodedMsg}`;
+  window.open(whatsappUrl, '_blank');
+}
+
+// CANCELLATION MODAL FUNCTIONS
+function openCancelModal() {
+  document.getElementById('cancelModal').style.display = 'flex';
+}
+
+function closeCancelModal() {
+  document.getElementById('cancelModal').style.display = 'none';
+}
+
+function handleCancelSubmission(e) {
+  e.preventDefault();
+
+  const phone = document.getElementById('cancelPhone').value.trim();
+  const name = document.getElementById('cancelName').value.trim();
+  const reason = document.getElementById('cancelReason').value;
+  const notes = document.getElementById('cancelNotes').value.trim();
+
+  let message = `🚫 *ORDER CANCELLATION REQUEST - MNZM SHOP*\n\n` +
+                `👤 *Customer Info:*\n` +
+                `• Name: ${name}\n` +
+                `• Registered Phone: ${phone}\n\n` +
+                `❓ *Reason:* ${reason}\n` +
+                `📝 *Additional Details:* ${notes || 'None'}\n\n` +
+                `Please process my order cancellation within the 2-hour window. Thank you.`;
+
+  let encodedMsg = encodeURIComponent(message);
+  let whatsappUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodedMsg}`;
+
+  window.open(whatsappUrl, '_blank');
+  closeCancelModal();
+}
+
 function updateCartUI() {
   const countEl = document.getElementById('cartCount');
   const listEl = document.getElementById('cartItemsList');
@@ -391,6 +441,23 @@ function openCheckoutModal() {
 
 function closeCheckoutModal() {
   document.getElementById('checkoutModal').style.display = 'none';
+  // Reset payment selection and hide QR container on close
+  const paymentSelect = document.getElementById('custPayment');
+  if (paymentSelect) paymentSelect.value = "Cash on Delivery (COD)";
+  const qrBox = document.getElementById('qrContainer');
+  if (qrBox) qrBox.style.display = 'none';
+}
+
+// Function to show/hide QR code dynamically in checkout modal
+function toggleQROption(paymentMethod) {
+  const qrBox = document.getElementById('qrContainer');
+  if (!qrBox) return;
+
+  if (paymentMethod === 'UPI / Online Payment') {
+    qrBox.style.display = 'block';
+  } else {
+    qrBox.style.display = 'none';
+  }
 }
 
 function handleOrderSubmission(e) {
@@ -405,13 +472,17 @@ function handleOrderSubmission(e) {
   let orderDetails = cart.map((item, i) => `${i + 1}. *${item.title}*\n   - Color: ${item.color}\n   - Size: ${item.size}\n   - Qty: ${item.qty}\n   - Price: ₹${item.price * item.qty}`).join('\n\n');
   let totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
 
-  let message = `🛍️ *NEW ORDER - MNZM SHOP*\n\n` +
+  let paymentNote = (payment === 'UPI / Online Payment') 
+    ? `\n💳 *Payment Status:* Online Prepaid (Screenshot attached in chat)` 
+    : `\n💳 *Payment Status:* Cash on Delivery (COD)`;
+
+  let message = `🛍️ *CART ORDER - MNZM SHOP*\n\n` +
     `👤 *Customer Details:*\n` +
     `• Name: ${name}\n` +
     `• Phone: ${phone}\n` +
     `• Address: ${address}\n` +
     `• Pincode: ${pincode}\n` +
-    `• Payment Mode: ${payment}\n\n` +
+    `• Payment Mode: ${payment}${paymentNote}\n\n` +
     `📦 *Order Summary:*\n${orderDetails}\n\n` +
     `💰 *Total Amount:* ₹${totalPrice}\n\n` +
     `Please confirm my order. Thank you!`;
