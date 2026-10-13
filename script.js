@@ -220,9 +220,17 @@ function openProductDetail(productId) {
 
   const sizeContainer = document.getElementById('detailSizes');
   if (sizeContainer) {
-    sizeContainer.innerHTML = prod.sizes.map((s, idx) => `
+    let buttonsHTML = prod.sizes.map((s, idx) => `
       <button class="opt-btn ${idx === 0 ? 'selected' : ''}" onclick="selectCardOption(this)">${s}</button>
     `).join('');
+
+    sizeContainer.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:0.5rem;">
+        <span style="font-size:0.85rem; font-weight:600;">Available Sizes:</span>
+        <a href="javascript:void(0)" onclick="openSizeChartModal()" style="font-size:0.8rem; color:#2563eb; font-weight:600; text-decoration:underline;">Size Guide 📏</a>
+      </div>
+      <div>${buttonsHTML}</div>
+    `;
   }
 
   const addBtn = document.getElementById('detailAddToCartBtn');
@@ -375,6 +383,34 @@ function handleCancelSubmission(e) {
   closeCancelModal();
 }
 
+// SIZE CHART MODAL FUNCTIONS
+function openSizeChartModal() {
+  const modal = document.getElementById('sizeChartModal');
+  if (modal) {
+    modal.style.display = 'flex';
+  }
+}
+
+function closeSizeChartModal() {
+  const modal = document.getElementById('sizeChartModal');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+}
+
+// FAQ TOGGLE FUNCTION
+function toggleFaq(element) {
+  const answer = element.nextElementSibling;
+  const icon = element.querySelector('span:last-child');
+  if (answer.style.display === 'block') {
+    answer.style.display = 'none';
+    icon.innerText = '➕';
+  } else {
+    answer.style.display = 'block';
+    icon.innerText = '➖';
+  }
+}
+
 function updateCartUI() {
   const countEl = document.getElementById('cartCount');
   const listEl = document.getElementById('cartItemsList');
@@ -441,14 +477,12 @@ function openCheckoutModal() {
 
 function closeCheckoutModal() {
   document.getElementById('checkoutModal').style.display = 'none';
-  // Reset payment selection and hide QR container on close
   const paymentSelect = document.getElementById('custPayment');
   if (paymentSelect) paymentSelect.value = "Cash on Delivery (COD)";
   const qrBox = document.getElementById('qrContainer');
   if (qrBox) qrBox.style.display = 'none';
 }
 
-// Function to show/hide QR code dynamically in checkout modal
 function toggleQROption(paymentMethod) {
   const qrBox = document.getElementById('qrContainer');
   if (!qrBox) return;
@@ -530,7 +564,7 @@ function submitCardReview(e, prodId) {
   localStorage.setItem('mnzmCardReviews', JSON.stringify(allReviews));
   renderAllCardReviews();
   form.reset();
-  showToast("Review submitted!");
+  showToast("Review submitted successfully! ✅");
 }
 
 function renderAllCardReviews() {
@@ -540,7 +574,7 @@ function renderAllCardReviews() {
       container.innerHTML = allReviews[id].map(r => `
         <div class="review-item">
           <div class="review-head">
-            <span>${r.name}</span>
+            <span>${r.name} <span class="verified-badge">✔ Verified Buyer</span></span>
             <span class="star-gold">${'★'.repeat(r.rating)}</span>
           </div>
           <div>${r.text}</div>
