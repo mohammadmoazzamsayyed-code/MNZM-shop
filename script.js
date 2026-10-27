@@ -54,9 +54,10 @@ const productDetailsDatabase = {
       'Dark Grey': ['images/leggings1.png'],
       'Black': ['images/leggings2.png'],
       'Navy Blue': ['images/leggings3.png'],
-      'Maroon': ['images/leggings4.png']
+      'Maroon': ['images/leggings4.png'],
+      'Purple': ['images/purple-leggings1.png']
     },
-    colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon'],
+    colors: ['Dark Grey', 'Black', 'Navy Blue', 'Maroon', 'Purple'],
     sizes: ['XL', 'XXL', '3XL']
   },
   'nylon-leggings': {
@@ -67,9 +68,10 @@ const productDetailsDatabase = {
     colorImages: {
       'Black': ['images/nylon1.png'],
       'Dark Grey': ['images/nylon2.png'],
-      'Navy Blue': ['images/nylon3.png']
+      'Navy Blue': ['images/nylon3.png'],
+      'Purple': ['images/purple-nylon1.png']
     },
-    colors: ['Black', 'Dark Grey', 'Navy Blue'],
+    colors: ['Black', 'Dark Grey', 'Navy Blue', 'Purple'],
     sizes: ['XL', 'XXL', '3XL']
   },
   'printed-plazo': {
@@ -351,7 +353,6 @@ function buyCardViaWhatsApp(btn, title, price) {
   window.open(whatsappUrl, '_blank');
 }
 
-// CANCELLATION MODAL FUNCTIONS
 function openCancelModal() {
   document.getElementById('cancelModal').style.display = 'flex';
 }
@@ -383,7 +384,6 @@ function handleCancelSubmission(e) {
   closeCancelModal();
 }
 
-// SIZE CHART MODAL FUNCTIONS
 function openSizeChartModal() {
   const modal = document.getElementById('sizeChartModal');
   if (modal) {
@@ -398,7 +398,6 @@ function closeSizeChartModal() {
   }
 }
 
-// FAQ TOGGLE FUNCTION
 function toggleFaq(element) {
   const answer = element.nextElementSibling;
   const icon = element.querySelector('span:last-child');
